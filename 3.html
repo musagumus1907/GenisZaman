@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>İngilizce Quiz - In On At For Edatları (81-120)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Comic Sans MS', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+    min-height: 100vh;
+    padding: 12px;
+    color: #333;
+    -webkit-text-size-adjust: 100%;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+
+  header {
+    background: white;
+    border-radius: 16px;
+    padding: 18px 15px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    margin-bottom: 18px;
+  }
+  header h1 { color: #185a9d; font-size: 20px; margin-bottom: 6px; }
+  header p { color: #666; font-size: 13px; }
+
+  .summary-box {
+    background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+    border: 3px dashed #f57f17;
+    border-radius: 16px;
+    padding: 15px;
+    margin-bottom: 18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    color: #4e342e;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .summary-box h2 {
+    text-align: center;
+    color: #e65100;
+    font-size: 16px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .summary-box .group {
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 8px;
+  }
+  .summary-box .group:last-child { margin-bottom: 0; }
+  .summary-box .group b { color: #bf360c; }
+  .summary-box .ex { color: #1b5e20; font-style: italic; }
+
+  .score-box {
+    position: sticky;
+    top: 6px;
+    z-index: 100;
+    background: #ffd93d;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .question-card {
+    background: white;
+    border-radius: 16px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.13);
+  }
+  .q-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .q-number {
+    background: #185a9d;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .q-type {
+    background: #c8e6c9;
+    color: #1b5e20;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+  }
+  .question-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0 14px 0;
+    padding: 12px;
+    background: #e8f5e9;
+    border-left: 5px solid #185a9d;
+    border-radius: 10px;
+    line-height: 1.4;
+    text-align: center;
+  }
+  .question-text .blank {
+    display: inline-block;
+    min-width: 60px;
+    border-bottom: 3px dotted #e91e63;
+    color: #e91e63;
+    font-weight: bold;
+    padding: 0 4px;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 8px; }
+
+  .option-btn {
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 12px;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    font-family: inherit;
+    text-align: left;
+    width: 100%;
+    color: #333;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .option-btn:active { transform: scale(0.98); }
+  .option-btn:focus { outline: 3px solid #4fc3f7; }
+  .option-btn .label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background: #185a9d;
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 13px;
+  }
+  .option-btn .opt-text { flex: 1; font-size: 16px; }
+
+  .option-btn.correct-open {
+    border-color: #1e88e5;
+    background: #e3f2fd;
+  }
+  .option-btn.correct-open .label { background: #1e88e5; }
+  .option-btn.correct-open .opt-text { color: #0d47a1; }
+
+  .option-btn.wrong-open {
+    border-color: #e91e63;
+    background: #fce4ec;
+  }
+  .option-btn.wrong-open .label { background: #e91e63; }
+  .option-btn.wrong-open .opt-text { color: #880e4f; }
+
+  .details {
+    display: none;
+    margin-top: 6px;
+    margin-bottom: 4px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.7;
+    border-left: 4px solid;
+  }
+  .details.open { display: block; }
+  .details.blue {
+    background: #e3f2fd;
+    border-left-color: #1e88e5;
+    color: #0d47a1;
+  }
+  .details.pink {
+    background: #fce4ec;
+    border-left-color: #e91e63;
+    color: #880e4f;
+  }
+  .details .line { margin: 4px 0; }
+  .details .line b { font-weight: bold; }
+  .details .wordbyword {
+    background: rgba(255,255,255,0.6);
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    line-height: 1.8;
+    margin-top: 4px;
+  }
+  .details .muazzam {
+    color: #d32f2f;
+    font-weight: bold;
+    font-size: 17px;
+    text-align: center;
+    margin: 10px 0 2px 0;
+    letter-spacing: 2px;
+    animation: pop 0.4s ease;
+  }
+  @keyframes pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .speaker-btn {
+    background: #1e88e5;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .speaker-btn:active { transform: scale(0.9); }
+
+  .flag-divider {
+    text-align: center;
+    font-size: 26px;
+    margin: 6px 0 14px 0;
+    opacity: 0.95;
+    line-height: 1;
+  }
+
+  .reset-btn {
+    display: block;
+    margin: 20px auto 0;
+    background: #185a9d;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .reset-btn:active { transform: scale(0.97); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🎯 İngilizce Quiz - In / On / At / For</h1>
+    <p>Sorular 81–120 • Edatlar (Prepositions) • Geniş Zaman</p>
+    <p style="font-size:12px; margin-top:6px; color:#999;">Her şıkka tıklayarak veya Enter'a basarak açıklamayı görebilirsin.</p>
+  </header>
+
+  <div class="summary-box">
+    <h2>📘 ÖZET FORMÜL</h2>
+    <div class="group"><b>⏳ ZAMAN</b><br>
+      • <b>IN</b> (Büyük): Yıl, mevsim, ay ➡️ <span class="ex">in 2026, in summer, in April</span><br>
+      • <b>ON</b> (Orta): Günler ve içinde "day" geçenler ➡️ <span class="ex">on Monday, on my birthday</span><br>
+      • <b>AT</b> (Küçük): Saatler ve night kelimesi ➡️ <span class="ex">at 5 o'clock, at night</span>
+    </div>
+    <div class="group"><b>📍 YER</b><br>
+      • <b>IN</b> (İçinde): Sınırları olan kapalı yerler ➡️ <span class="ex">in the room, in Turkey</span><br>
+      • <b>ON</b> (Üstünde): Yüzeye temas ve toplu taşıma ➡️ <span class="ex">on the table, on the bus</span><br>
+      • <b>AT</b> (Nokta): Tam bulunulan kurum/adres ➡️ <span class="ex">at the bus stop, at school</span>
+    </div>
+    <div class="group"><b>🎯 FOR (İçin / Süreç)</b><br>
+      • ⏱️ Arkasından sayı/süre geliyorsa ➡️ <span class="ex">for 3 days (3 gündür)</span>
+    </div>
+  </div>
+
+  <div class="score-box">
+    ⭐ Puan: <span id="score">0</span>/40 &nbsp;|&nbsp; ✅ <span id="correct">0</span> &nbsp;|&nbsp; ❌ <span id="wrong">0</span>
+  </div>
+
+  <div id="quiz"></div>
+
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Quiz'i Sıfırla</button>
+</div>
+
+<script>
+const synth = window.speechSynthesis;
+
+function speakEnglish(text, btn) {
+  if (!synth) { alert('Tarayıcın sesli okumayı desteklemiyor.'); return; }
+  synth.cancel();
+  const clean = text.replace(/[\(\)]/g, ' ').replace(/\s+/g, ' ').trim();
+  const utter = new SpeechSynthesisUtterance(clean);
+  utter.lang = 'en-US';
+  utter.rate = 0.85;
+  utter.pitch = 1.05;
+  const voices = synth.getVoices();
+  const engVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('en-US'))
+                || voices.find(v => v.lang && v.lang.toLowerCase().startsWith('en'));
+  if (engVoice) utter.voice = engVoice;
+  synth.speak(utter);
+}
+
+const questions = [
+  /* Soru 81 */
+  { q:"My brother takes the dog for a walk ___ the evening.", full:"My brother takes the dog for a walk in the evening.",
+    trans:"Kardeşim akşamleyin köpeği yürüyüşe çıkarır.",
+    wordByWord:"My (benim) brother (kardeşim) takes (alır) the (belirli) dog (köpek) for (için) a (bir) walk (yürüyüş) in (-de) the (belirli) evening (akşam).",
+    options:[
+      { t:"in", correct:true, why:"✅ 'the evening' ifadesiyle 'in' kullanılır. (in the evening = akşamleyin)" },
+      { t:"on", correct:false, why:"❌ 'on' 'evening' ile kullanılmaz." },
+      { t:"at", correct:false, why:"❌ Sadece 'night' ile 'at' kullanılır, 'evening' ile değil." },
+      { t:"for", correct:false, why:"❌ 'for' zaman aralığını belirtmez." }
+    ]
+  },
+  /* Soru 82 */
+  { q:"The birds sing sweetly ___ the morning.", full:"The birds sing sweetly in the morning.",
+    trans:"Kuşlar sabahleyin tatlı tatlı öter.",
+    wordByWord:"The (belirli) birds (kuşlar) sing (öter) sweetly (tatlı tatlı) in (-de) the (belirli) morning (sabah).",
+    options:[
+      { t:"in", correct:true, why:"✅ 'the morning' ifadesiyle 'in' kullanılır. (in the morning = sabahleyin)" },
+      { t:"on", correct:false, why:"❌ 'on' 'morning' ile kullanılmaz." },
+      { t:"at", correct:false, why:"❌ 'at' sadece saatler ve 'night' ile kullanılır." },
+      { t:"for", correct:false, why:"❌ 'for' zaman aralığı için kullanılmaz." }
+    ]
+  },
+  /* Soru 83 */
+  { q:"My father reads the newspaper ___ breakfast.", full:"My father reads the newspaper at breakfast.",
+    trans:"Babam kahvaltıda gazete okur.",
+    wordByWord:"My (benim) father (babam) reads (okur) the (belirli) newspaper (gazete) at (-de) breakfast (kahvaltı).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'breakfast' ile 'in' kullanılmaz." },
+      { t:"on", correct:false, why:"❌ 'on' 'breakfast' ile kullanılmaz." },
+      { t:"at", correct:true, why:"✅ 'breakfast, lunch, dinner' öğün adlarıyla 'at' kullanılır. (at breakfast = kahvaltıda)" },
+      { t:"for", correct:false, why:"❌ 'for' öğün adıyla kullanılmaz." }
+    ]
+  },
+  /* Soru 84 */
+  { q:"We usually watch movies ___ the weekend.", full:"We usually watch movies at the weekend.",
+    trans:"Hafta sonu genellikle film izleriz.",
+    wordByWord:"We (biz) usually (genellikle) watch (izleriz) movies (filmler) at (-de) the (belirli) weekend (hafta sonu).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'the weekend' ile 'in' Amerikan İngilizcesinde kullanılır ama İngiliz İngilizcesinde 'at' tercih edilir." },
+      { t:"on", correct:false, why:"❌ 'on the weekend' Amerikan İngilizcesinde kullanılır, burada 'at' tercih edilir." },
+      { t:"at", correct:true, why:"✅ İngiliz İngilizcesinde 'at the weekend' kullanılır. (at the weekend = hafta sonu)" },
+      { t:"for", correct:false, why:"❌ 'for' zaman aralığı için kullanılmaz." }
+    ]
+  },
+  /* Soru 85 */
+  { q:"My mother is cooking dinner ___ the kitchen.", full:"My mother is cooking dinner in the kitchen.",
+    trans:"Annem mutfakta akşam yemeği pişiriyor.",
+    wordByWord:"My (benim) mother (annem) is (dir) cooking (pişiriyor) dinner (akşam yemeği) in (-de) the (belirli) kitchen (mutfak).",
+    options:[
+      { t:"in", correct:true, why:"✅ Kapalı bir mekan → 'in'. (in the kitchen = mutfakta)" },
+      { t:"on", correct:false, why:"❌ 'on' kapalı mekan için kullanılmaz." },
+      { t:"at", correct:false, why:"❌ 'at' mutfak için kullanılmaz, kapalı alan olduğu için 'in' doğru." },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 86 */
+  { q:"The picture hangs ___ the wall above the sofa.", full:"The picture hangs on the wall above the sofa.",
+    trans:"Resim kanepenin üstündeki duvarda asılıdır.",
+    wordByWord:"The (belirli) picture (resim) hangs (asılır) on (üstünde) the (belirli) wall (duvar) above (üstünde) the (belirli) sofa (kanepe).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' duvarın içinde olmak anlamına gelir, resim yüzeyde asılıdır." },
+      { t:"on", correct:true, why:"✅ Yüzeye temas → 'on'. (on the wall = duvarda)" },
+      { t:"at", correct:false, why:"❌ 'at' yüzey için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 87 */
+  { q:"My grandparents live ___ a small apartment.", full:"My grandparents live in a small apartment.",
+    trans:"Büyükanne ve büyükbabam küçük bir dairede yaşar.",
+    wordByWord:"My (benim) grandparents (büyükanne ve büyükbabam) live (yaşar) in (-de) a (bir) small (küçük) apartment (daire).",
+    options:[
+      { t:"in", correct:true, why:"✅ Kapalı yaşam alanı → 'in'. (in an apartment = bir dairede)" },
+      { t:"on", correct:false, why:"❌ 'on' yaşam alanı için kullanılmaz." },
+      { t:"at", correct:false, why:"❌ 'at' daire için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 88 */
+  { q:"My sister studies ___ a famous university.", full:"My sister studies at a famous university.",
+    trans:"Kız kardeşim ünlü bir üniversitede okur.",
+    wordByWord:"My (benim) sister (kız kardeşim) studies (okur) at (-de) a (bir) famous (ünlü) university (üniversite).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' üniversitenin binası içinde olmak anlamına gelebilir ama kurum için 'at' tercih edilir." },
+      { t:"on", correct:false, why:"❌ 'on' üniversite için kullanılmaz." },
+      { t:"at", correct:true, why:"✅ Kurum belirtirken 'at' kullanılır. (at a university = bir üniversitede)" },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 89 */
+  { q:"We travel to school ___ the school bus every morning.", full:"We travel to school on the school bus every morning.",
+    trans:"Her sabah okula okul servisiyle gideriz.",
+    wordByWord:"We (biz) travel (gideriz) to (doğru) school (okul) on (-de) the (belirli) school (okul) bus (servis) every (her) morning (sabah).",
+    options:[
+      { t:"in", correct:false, why:"❌ Toplu taşımada 'in' değil 'on' kullanılır." },
+      { t:"on", correct:true, why:"✅ Toplu taşıma araçlarında 'on' kullanılır. (on the bus = otobüste)" },
+      { t:"at", correct:false, why:"❌ 'at' araç içinde olmayı belirtmez." },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 90 */
+  { q:"My uncle lives ___ France with his family.", full:"My uncle lives in France with his family.",
+    trans:"Amcam ailesiyle Fransa'da yaşar.",
+    wordByWord:"My (benim) uncle (amcam) lives (yaşar) in (-de) France (Fransa) with (ile) his (onun) family (ailesi).",
+    options:[
+      { t:"in", correct:true, why:"✅ Ülkelerden önce 'in' kullanılır. (in France = Fransa'da)" },
+      { t:"on", correct:false, why:"❌ 'on' ülkeler için kullanılmaz." },
+      { t:"at", correct:false, why:"❌ 'at' ülkeler için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 91 */
+  { q:"I wait for my friend ___ the corner of the street.", full:"I wait for my friend at the corner of the street.",
+    trans:"Arkadaşımı sokağın köşesinde beklerim.",
+    wordByWord:"I (ben) wait (bekerim) for (için) my (benim) friend (arkadaşımı) at (-de) the (belirli) corner (köşe) of (nin) the (belirli) street (sokak).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' köşenin içini belirtir, buluşma noktası için 'at' doğru." },
+      { t:"on", correct:false, why:"❌ 'on' köşe için kullanılmaz." },
+      { t:"at", correct:true, why:"✅ Tam bulunulan nokta → 'at'. (at the corner = köşede)" },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 92 */
+  { q:"We swim in the pool ___ two hours every Saturday.", full:"We swim in the pool for two hours every Saturday.",
+    trans:"Her cumartesi iki saat boyunca havuzda yüzeriz.",
+    wordByWord:"We (biz) swim (yüzeriz) in (-de) the (belirli) pool (havuz) for (boyunca) two (iki) hours (saat) every (her) Saturday (cumartesi).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' süre belirtmez." },
+      { t:"on", correct:false, why:"❌ 'on' süre belirtmez." },
+      { t:"at", correct:false, why:"❌ 'at' süre belirtmez." },
+      { t:"for", correct:true, why:"✅ Arkasından süre geliyor → 'for'. (for two hours = iki saat boyunca)" }
+    ]
+  },
+  /* Soru 93 */
+  { q:"My cousin plays the piano ___ Tuesday evenings.", full:"My cousin plays the piano on Tuesday evenings.",
+    trans:"Kuzenim salı akşamları piyano çalar.",
+    wordByWord:"My (benim) cousin (kuzenim) plays (çalar) the (belirli) piano (piyano) on (-de) Tuesday (salı) evenings (akşamları).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' günler için kullanılmaz." },
+      { t:"on", correct:true, why:"✅ Günlerden önce 'on' kullanılır. (on Tuesday evenings = salı akşamları)" },
+      { t:"at", correct:false, why:"❌ 'at' günler için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' günler için kullanılmaz." }
+    ]
+  },
+  /* Soru 94 */
+  { q:"The children eat their lunch ___ noon.", full:"The children eat their lunch at noon.",
+    trans:"Çocuklar öğlen yemeklerini yer.",
+    wordByWord:"The (belirli) children (çocuklar) eat (yer) their (onların) lunch (öğle yemeği) at (-de) noon (öğlen).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'noon' ile 'in' kullanılmaz." },
+      { t:"on", correct:false, why:"❌ 'noon' ile 'on' kullanılmaz." },
+      { t:"at", correct:true, why:"✅ 'noon' ve 'midnight' kelimeleriyle 'at' kullanılır. (at noon = öğlen)" },
+      { t:"for", correct:false, why:"❌ 'for' saat için kullanılmaz." }
+    ]
+  },
+  /* Soru 95 */
+  { q:"My dog hides his bone ___ the ground.", full:"My dog hides his bone in the ground.",
+    trans:"Köpeğim kemiğini toprağa gömer.",
+    wordByWord:"My (benim) dog (köpeğim) hides (gömer) his (onun) bone (kemiği) in (-de) the (belirli) ground (toprak).",
+    options:[
+      { t:"in", correct:true, why:"✅ Toprağın içine gömme → 'in'. (in the ground = toprağın içinde)" },
+      { t:"on", correct:false, why:"❌ 'on' yüzeyde olmak anlamına gelir, gömülmek içeri doğrudur." },
+      { t:"at", correct:false, why:"❌ 'at' toprak için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 96 */
+  { q:"The library opens ___ 8 a.m. every weekday.", full:"The library opens at 8 a.m. every weekday.",
+    trans:"Kütüphane her hafta içi sabah 8'de açılır.",
+    wordByWord:"The (belirli) library (kütüphane) opens (açılır) at (-de) 8 (sekiz) a.m. (sabah) every (her) weekday (hafta içi gün).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' saatler için kullanılmaz." },
+      { t:"on", correct:false, why:"❌ 'on' saatler için kullanılmaz." },
+      { t:"at", correct:true, why:"✅ Saatlerden önce 'at' kullanılır. (at 8 a.m. = sabah 8'de)" },
+      { t:"for", correct:false, why:"❌ 'for' saatler için kullanılmaz." }
+    ]
+  },
+  /* Soru 97 */
+  { q:"My best friend lives ___ the third floor.", full:"My best friend lives on the third floor.",
+    trans:"En iyi arkadaşım üçüncü katta yaşar.",
+    wordByWord:"My (benim) best (en iyi) friend (arkadaşım) lives (yaşar) on (-de) the (belirli) third (üçüncü) floor (kat).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' kat için kullanılmaz." },
+      { t:"on", correct:true, why:"✅ Kat ifadelerinde 'on' kullanılır. (on the third floor = üçüncü katta)" },
+      { t:"at", correct:false, why:"❌ 'at' kat için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 98 */
+  { q:"My little sister sleeps ___ 9 p.m. every night.", full:"My little sister sleeps at 9 p.m. every night.",
+    trans:"Küçük kız kardeşim her gece 21:00'de uyur.",
+    wordByWord:"My (benim) little (küçük) sister (kız kardeşim) sleeps (uyur) at (-de) 9 (dokuz) p.m. (akşam) every (her) night (gece).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' saatler için kullanılmaz." },
+      { t:"on", correct:false, why:"❌ 'on' saatler için kullanılmaz." },
+      { t:"at", correct:true, why:"✅ Saatlerden önce 'at' kullanılır. (at 9 p.m. = akşam 9'da)" },
+      { t:"for", correct:false, why:"❌ 'for' saatler için kullanılmaz." }
+    ]
+  },
+  /* Soru 99 */
+  { q:"We stay in a nice hotel ___ our holiday.", full:"We stay in a nice hotel on our holiday.",
+    trans:"Tatilimizde güzel bir otelde kalırız.",
+    wordByWord:"We (biz) stay (kalırız) in (-de) a (bir) nice (güzel) hotel (otel) on (-de) our (bizim) holiday (tatil).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' tatil için kullanılmaz, 'on holiday' bir deyimdir." },
+      { t:"on", correct:true, why:"✅ 'on holiday' bir deyimdir. (on our holiday = tatilimizde)" },
+      { t:"at", correct:false, why:"❌ 'at' tatil için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' tatil için kullanılmaz." }
+    ]
+  },
+  /* Soru 100 */
+  { q:"My father works as a doctor ___ the city hospital.", full:"My father works as a doctor at the city hospital.",
+    trans:"Babam şehir hastanesinde doktor olarak çalışır.",
+    wordByWord:"My (benim) father (babam) works (çalışır) as (olarak) a (bir) doctor (doktor) at (-de) the (belirli) city (şehir) hospital (hastane).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' hastanenin binası içinde olmak anlamına gelebilir ama kurum için 'at' tercih edilir." },
+      { t:"on", correct:false, why:"❌ 'on' hastane için kullanılmaz." },
+      { t:"at", correct:true, why:"✅ Kurum belirtirken 'at' kullanılır. (at the hospital = hastanede)" },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 101 */
+  { q:"We meet our cousins ___ Easter every year.", full:"We meet our cousins at Easter every year.",
+    trans:"Her yıl paskalya bayramında kuzenlerimizle buluşuruz.",
+    wordByWord:"We (biz) meet (buluşuruz) our (bizim) cousins (kuzenlerimizle) at (-de) Easter (paskalya) every (her) year (yıl).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'Easter' ile 'in' kullanılmaz." },
+      { t:"on", correct:false, why:"❌ 'Easter' ile 'on' kullanılmaz." },
+      { t:"at", correct:true, why:"✅ Dini bayramlarda 'at' kullanılır. (at Easter = paskalyada)" },
+      { t:"for", correct:false, why:"❌ 'for' bayram için kullanılmaz." }
+    ]
+  },
+  /* Soru 102 */
+  { q:"My mother keeps the sugar ___ the cupboard.", full:"My mother keeps the sugar in the cupboard.",
+    trans:"Annem şekeri dolapta saklar.",
+    wordByWord:"My (benim) mother (annem) keeps (saklar) the (belirli) sugar (şeker) in (-de) the (belirli) cupboard (dolap).",
+    options:[
+      { t:"in", correct:true, why:"✅ Kapalı bir yer → 'in'. (in the cupboard = dolapta)" },
+      { t:"on", correct:false, why:"❌ 'on' dolabın üstünde olmak anlamına gelir, içinde değil." },
+      { t:"at", correct:false, why:"❌ 'at' dolap için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 103 */
+  { q:"We usually eat fish ___ Fridays.", full:"We usually eat fish on Fridays.",
+    trans:"Cuma günleri genellikle balık yeriz.",
+    wordByWord:"We (biz) usually (genellikle) eat (yeriz) fish (balık) on (-de) Fridays (cumaları).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' günler için kullanılmaz." },
+      { t:"on", correct:true, why:"✅ Günlerden önce 'on' kullanılır. (on Fridays = cuma günleri)" },
+      { t:"at", correct:false, why:"❌ 'at' günler için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' günler için kullanılmaz." }
+    ]
+  },
+  /* Soru 104 */
+  { q:"My brother waits for his girlfriend ___ the cinema entrance.", full:"My brother waits for his girlfriend at the cinema entrance.",
+    trans:"Kardeşim kız arkadaşını sinema girişinde bekler.",
+    wordByWord:"My (benim) brother (kardeşim) waits (bekler) for (için) his (onun) girlfriend (kız arkadaşını) at (-de) the (belirli) cinema (sinema) entrance (giriş).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' girişin içini belirtir, bekleme noktası için 'at' doğru." },
+      { t:"on", correct:false, why:"❌ 'on' giriş için kullanılmaz." },
+      { t:"at", correct:true, why:"✅ Tam bulunulan nokta → 'at'. (at the entrance = girişte)" },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 105 */
+  { q:"My aunt reads books ___ three hours every evening.", full:"My aunt reads books for three hours every evening.",
+    trans:"Halam her akşam üç saat kitap okur.",
+    wordByWord:"My (benim) aunt (halam) reads (okur) books (kitaplar) for (boyunca) three (üç) hours (saat) every (her) evening (akşam).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' süre belirtmez." },
+      { t:"on", correct:false, why:"❌ 'on' süre belirtmez." },
+      { t:"at", correct:false, why:"❌ 'at' süre belirtmez." },
+      { t:"for", correct:true, why:"✅ Arkasından süre geliyor → 'for'. (for three hours = üç saat boyunca)" }
+    ]
+  },
+  /* Soru 106 */
+  { q:"My friends play basketball ___ Sunday mornings.", full:"My friends play basketball on Sunday mornings.",
+    trans:"Arkadaşlarım pazar sabahları basketbol oynar.",
+    wordByWord:"My (benim) friends (arkadaşlarım) play (oynar) basketball (basketbol) on (-de) Sunday (pazar) mornings (sabahları).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' günler için kullanılmaz." },
+      { t:"on", correct:true, why:"✅ Günlerden önce 'on' kullanılır. (on Sunday mornings = pazar sabahları)" },
+      { t:"at", correct:false, why:"❌ 'at' günler için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' günler için kullanılmaz." }
+    ]
+  },
+  /* Soru 107 */
+  { q:"My mother is ___ the supermarket now.", full:"My mother is at the supermarket now.",
+    trans:"Annem şimdi süpermarkette.",
+    wordByWord:"My (benim) mother (annem) is (dir) at (-de) the (belirli) supermarket (süpermarket) now (şimdi).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' süpermarketin içinde olmak anlamına gelebilir ama nokta belirtirken 'at' tercih edilir." },
+      { t:"on", correct:false, why:"❌ 'on' süpermarket için kullanılmaz." },
+      { t:"at", correct:true, why:"✅ Nokta belirtirken 'at' kullanılır. (at the supermarket = süpermarkette)" },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 108 */
+  { q:"We go skiing ___ January every year.", full:"We go skiing in January every year.",
+    trans:"Her yıl ocakta kayak yapmaya gideriz.",
+    wordByWord:"We (biz) go (gideriz) skiing (kayak) in (-de) January (ocak) every (her) year (yıl).",
+    options:[
+      { t:"in", correct:true, why:"✅ Aylardan önce 'in' kullanılır. (in January = ocakta)" },
+      { t:"on", correct:false, why:"❌ 'on' aylar için kullanılmaz." },
+      { t:"at", correct:false, why:"❌ 'at' aylar için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' ay ismiyle kullanılmaz." }
+    ]
+  },
+  /* Soru 109 */
+  { q:"There is a small cat ___ the sofa.", full:"There is a small cat on the sofa.",
+    trans:"Kanepede küçük bir kedi var.",
+    wordByWord:"There (orada) is (vardır) a (bir) small (küçük) cat (kedi) on (üstünde) the (belirli) sofa (kanepe).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' kanepenin içinde olmak anlamına gelir, kedi üstündedir." },
+      { t:"on", correct:true, why:"✅ Yüzeye temas → 'on'. (on the sofa = kanepede)" },
+      { t:"at", correct:false, why:"❌ 'at' yüzey için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 110 */
+  { q:"My father waits for the bus ___ the bus stop.", full:"My father waits for the bus at the bus stop.",
+    trans:"Babam otobüs durağında otobüsü bekler.",
+    wordByWord:"My (benim) father (babam) waits (bekler) for (için) the (belirli) bus (otobüsü) at (-de) the (belirli) bus (otobüs) stop (durak).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' durağın içini belirtir, bekleme noktası için 'at' doğru." },
+      { t:"on", correct:false, why:"❌ 'on' durak için kullanılmaz." },
+      { t:"at", correct:true, why:"✅ Tam bulunulan nokta → 'at'. (at the bus stop = otobüs durağında)" },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 111 */
+  { q:"We go to the seaside ___ August.", full:"We go to the seaside in August.",
+    trans:"Ağustosta deniz kenarına gideriz.",
+    wordByWord:"We (biz) go (gideriz) to (doğru) the (belirli) seaside (deniz kenarı) in (-de) August (ağustos).",
+    options:[
+      { t:"in", correct:true, why:"✅ Aylardan önce 'in' kullanılır. (in August = ağustosta)" },
+      { t:"on", correct:false, why:"❌ 'on' aylar için kullanılmaz." },
+      { t:"at", correct:false, why:"❌ 'at' aylar için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' ay ismiyle kullanılmaz." }
+    ]
+  },
+  /* Soru 112 */
+  { q:"My brother sleeps ___ the afternoon on Sundays.", full:"My brother sleeps in the afternoon on Sundays.",
+    trans:"Kardeşim pazar günleri öğleden sonra uyur.",
+    wordByWord:"My (benim) brother (kardeşim) sleeps (uyur) in (-de) the (belirli) afternoon (öğleden sonra) on (-de) Sundays (pazarları).",
+    options:[
+      { t:"in", correct:true, why:"✅ 'the afternoon' ifadesiyle 'in' kullanılır. (in the afternoon = öğleden sonra)" },
+      { t:"on", correct:false, why:"❌ 'on' 'the afternoon' ile kullanılmaz." },
+      { t:"at", correct:false, why:"❌ 'at' 'the afternoon' ile kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' zaman için kullanılmaz." }
+    ]
+  },
+  /* Soru 113 */
+  { q:"We arrive ___ the airport two hours early.", full:"We arrive at the airport two hours early.",
+    trans:"Havalimanına iki saat erken varırız.",
+    wordByWord:"We (biz) arrive (varırız) at (-de) the (belirli) airport (havalimanı) two (iki) hours (saat) early (erken).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' havalimanının içini belirtir, varış noktası için 'at' doğru." },
+      { t:"on", correct:false, why:"❌ 'on' havalimanı için kullanılmaz." },
+      { t:"at", correct:true, why:"✅ Varış noktası belirtirken 'at' kullanılır. (at the airport = havalimanına)" },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 114 */
+  { q:"My dog runs ___ the garden every morning.", full:"My dog runs in the garden every morning.",
+    trans:"Köpeğim her sabah bahçede koşar.",
+    wordByWord:"My (benim) dog (köpeğim) runs (koşar) in (-de) the (belirli) garden (bahçe) every (her) morning (sabah).",
+    options:[
+      { t:"in", correct:true, why:"✅ Kapalı bahçe alanı → 'in'. (in the garden = bahçede)" },
+      { t:"on", correct:false, why:"❌ 'on' bahçe için kullanılmaz." },
+      { t:"at", correct:false, why:"❌ 'at' bahçe için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 115 */
+  { q:"We usually visit our grandma ___ Christmas.", full:"We usually visit our grandma at Christmas.",
+    trans:"Noel'de genellikle büyükannemizi ziyaret ederiz.",
+    wordByWord:"We (biz) usually (genellikle) visit (ziyaret ederiz) our (bizim) grandma (büyükannemizi) at (-de) Christmas (Noel).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'Christmas' ile 'in' kullanılmaz." },
+      { t:"on", correct:false, why:"❌ 'Christmas' ile 'on' kullanılmaz." },
+      { t:"at", correct:true, why:"✅ Dini bayramlarda 'at' kullanılır. (at Christmas = Noel'de)" },
+      { t:"for", correct:false, why:"❌ 'for' bayram için kullanılmaz." }
+    ]
+  },
+  /* Soru 116 */
+  { q:"My friend sits ___ the floor and reads a comic book.", full:"My friend sits on the floor and reads a comic book.",
+    trans:"Arkadaşım yerde oturur ve çizgi roman okur.",
+    wordByWord:"My (benim) friend (arkadaşım) sits (oturur) on (-de) the (belirli) floor (yer) and (ve) reads (okur) a (bir) comic (çizgi) book (roman).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' yerin içinde olmak anlamına gelir, oturmak yüzeyde olur." },
+      { t:"on", correct:true, why:"✅ Yüzeye temas → 'on'. (on the floor = yerde)" },
+      { t:"at", correct:false, why:"❌ 'at' yüzey için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 117 */
+  { q:"The children study English ___ two hours every day.", full:"The children study English for two hours every day.",
+    trans:"Çocuklar her gün iki saat İngilizce çalışır.",
+    wordByWord:"The (belirli) children (çocuklar) study (çalışır) English (İngilizce) for (boyunca) two (iki) hours (saat) every (her) day (gün).",
+    options:[
+      { t:"in", correct:false, why:"❌ 'in' süre belirtmez." },
+      { t:"on", correct:false, why:"❌ 'on' süre belirtmez." },
+      { t:"at", correct:false, why:"❌ 'at' süre belirtmez." },
+      { t:"for", correct:true, why:"✅ Arkasından süre geliyor → 'for'. (for two hours = iki saat boyunca)" }
+    ]
+  },
+  /* Soru 118 */
+  { q:"My father puts his wallet ___ the drawer.", full:"My father puts his wallet in the drawer.",
+    trans:"Babam cüzdanını çekmeceye koyar.",
+    wordByWord:"My (benim) father (babam) puts (koyar) his (onun) wallet (cüzdanını) in (-de) the (belirli) drawer (çekmece).",
+    options:[
+      { t:"in", correct:true, why:"✅ Kapalı bir yer → 'in'. (in the drawer = çekmecede)" },
+      { t:"on", correct:false, why:"❌ 'on' çekmecenin üstünde olmak anlamına gelir, içinde değil." },
+      { t:"at", correct:false, why:"❌ 'at' çekmece için kullanılmaz." },
+      { t:"for", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 119 */
+  { q:"We have a picnic ___ the park ___ Sundays.", full:"We have a picnic in the park on Sundays.",
+    trans:"Pazar günleri parkta piknik yaparız.",
+    wordByWord:"We (biz) have (yaparız) a (bir) picnic (piknik) in (-de) the (belirli) park (park) on (-de) Sundays (pazarları).",
+    options:[
+      { t:"in ... on", correct:true, why:"✅ Park kapalı alan → 'in'; gün → 'on'. (in the park on Sundays)" },
+      { t:"on ... at", correct:false, why:"❌ Park için 'on' uygun değil, gün için 'at' kullanılmaz." },
+      { t:"at ... in", correct:false, why:"❌ Park için 'at' uygun değil, gün için 'in' kullanılmaz." },
+      { t:"for ... on", correct:false, why:"❌ 'for' yer belirtmez." }
+    ]
+  },
+  /* Soru 120 */
+  { q:"My mother wakes up ___ 6 a.m. ___ the morning.", full:"My mother wakes up at 6 a.m. in the morning.",
+    trans:"Annem sabah 6'da uyanır.",
+    wordByWord:"My (benim) mother (annem) wakes (uyanır) up (yukarı) at (-de) 6 (altı) a.m. (sabah) in (-de) the (belirli) morning (sabah).",
+    options:[
+      { t:"at ... in", correct:true, why:"✅ Saat → 'at', 'the morning' → 'in'. (at 6 a.m. in the morning)" },
+      { t:"in ... on", correct:false, why:"❌ Saat için 'in' kullanılmaz, 'morning' için 'on' kullanılmaz." },
+      { t:"on ... at", correct:false, why:"❌ Saat için 'on' kullanılmaz, 'morning' için 'at' kullanılmaz." },
+      { t:"for ... in", correct:false, why:"❌ 'for' saat için kullanılmaz." }
+    ]
+  }
+];
+
+let score = 0, correctCount = 0, wrongCount = 0;
+const scored = new Set();
+
+function renderQuiz() {
+  const container = document.getElementById('quiz');
+  container.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+
+  questions.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+
+    const qText = q.q.replace(/___/g, '<span class="blank">?</span>');
+
+    let optionsHTML = '';
+    q.options.forEach((opt, i) => {
+      optionsHTML += `
+        <button class="option-btn" data-q="${idx}" data-opt="${i}" type="button">
+          <span class="label">${letters[i]}</span>
+          <span class="opt-text">${opt.t}</span>
+        </button>
+        <div class="details" id="det-${idx}-${i}"></div>
+      `;
+    });
+
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-number">Soru ${idx + 81}</span>
+        <span class="q-type">📘 in / on / at / for</span>
+      </div>
+      <div class="question-text">${qText}</div>
+      <div class="options">${optionsHTML}</div>
+    `;
+    container.appendChild(card);
+
+    if (idx < questions.length - 1) {
+      const div = document.createElement('div');
+      div.className = 'flag-divider';
+      div.textContent = '🟡🔵 FENERBAHÇE 🔵🟡';
+      container.appendChild(div);
+    }
+  });
+
+  document.querySelectorAll('.option-btn').forEach(btn => {
+    btn.addEventListener('click', handleOptionClick);
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleOptionClick(e);
+      }
+    });
+  });
+}
+
+function handleOptionClick(e) {
+  const btn = e.currentTarget;
+  const qIdx = parseInt(btn.dataset.q);
+  const optIdx = parseInt(btn.dataset.opt);
+
+  const q = questions[qIdx];
+  const opt = q.options[optIdx];
+  const det = document.getElementById(`det-${qIdx}-${optIdx}`);
+
+  if (!scored.has(qIdx)) {
+    scored.add(qIdx);
+    if (opt.correct) { correctCount++; score++; }
+    else { wrongCount++; }
+    document.getElementById('score').textContent = score;
+    document.getElementById('correct').textContent = correctCount;
+    document.getElementById('wrong').textContent = wrongCount;
+  }
+
+  if (det.classList.contains('open')) {
+    det.classList.remove('open', 'blue', 'pink');
+    btn.classList.remove('correct-open', 'wrong-open');
+    return;
+  }
+
+  if (opt.correct) {
+    det.classList.add('open', 'blue');
+    btn.classList.add('correct-open');
+  } else {
+    det.classList.add('open', 'pink');
+    btn.classList.add('wrong-open');
+  }
+
+  det.innerHTML = buildDetails(opt, q);
+
+  det.querySelectorAll('.speaker-btn').forEach(b => {
+    b.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      speakEnglish(b.dataset.speak, b);
+    });
+  });
+}
+
+function buildDetails(opt, q) {
+  let html = '';
+  html += `<div class="line"><b>Açıklama:</b> ${opt.why}</div>`;
+  html += `<div class="line"><b>Tam cümle:</b> ${q.full}</div>`;
+  html += `<div class="line"><b>Türkçe çevirisi:</b> ${q.trans}</div>`;
+  html += `<div class="line"><b>Kelime kelime çevirisi:</b><div class="wordbyword">${q.wordByWord}</div></div>`;
+  html += `<div class="line"><button class="speaker-btn" data-speak="${escapeAttr(q.full)}" type="button">🔊</button></div>`;
+  if (opt.correct) {
+    html += `<div class="muazzam">✨ MUAZZAM! ✨</div>`;
+  }
+  return html;
+}
+
+function escapeAttr(s) {
+  return String(s).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function resetQuiz() {
+  score = 0; correctCount = 0; wrongCount = 0;
+  scored.clear();
+  document.getElementById('score').textContent = 0;
+  document.getElementById('correct').textContent = 0;
+  document.getElementById('wrong').textContent = 0;
+  renderQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+if (synth) { synth.onvoiceschanged = () => {}; }
+renderQuiz();
+</script>
+</body>
+</html>
