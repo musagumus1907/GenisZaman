@@ -8,7 +8,7 @@
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f4f7f6; }
         .nav-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #ccc; padding-bottom: 10px; }
         
-        /* Butonlar başlangıçta gizlidir */
+        /* Butonlar başlangıçta gizlidir, sadece klasörde olanlar açılacak */
         .tab-btn { display: none; padding: 12px 24px; border: none; background: #e0e0e0; cursor: pointer; font-size: 16px; font-weight: bold; border-radius: 5px; transition: 0.3s; }
         .tab-btn:hover { background: #bbb; }
         .tab-btn.active { background: #007bff; color: white; }
@@ -28,10 +28,9 @@
         const buttonArea = document.getElementById('buttonArea');
         const quizArea = document.getElementById('quizArea');
         
-        // 1. ADIM: 1'den 100'e kadar olan tüm yuvaları sıralı olarak önceden oluştur
-        // Böylece internet hangisini önce indirirse indirsin, sırası asla bozulmaz!
+        // 1. ADIM: 1'den 100'e kadar olan tüm HTML yuvalarını hafızada sırayla oluşturuyoruz.
+        // Bu sayede butonların HTML içindeki fiziksel sırası (1, 2, 3...) asla bozulamaz.
         for (let i = 1; i <= 100; i++) {
-            // Butonu sırasına göre yerleştir (Görünmez olarak)
             const btn = document.createElement('button');
             btn.className = 'tab-btn';
             btn.id = `btn_q${i}`;
@@ -39,7 +38,6 @@
             btn.onclick = (e) => openQuiz(`q${i}`, e.currentTarget);
             buttonArea.appendChild(btn);
 
-            // Quiz alanını sırasına göre yerleştir
             const div = document.createElement('div');
             div.id = `q${i}`;
             div.className = 'quiz-container';
@@ -47,9 +45,9 @@
             quizArea.appendChild(div);
         }
 
-        // 2. ADIM: Dosyaların varlığını kontrol et ve olanları sırasını bozmadan göster
-        let ilkBulunanQuizId = null;
-        let kontrolEdilenler = 0;
+        // 2. ADIM: Tüm kontroller bittikten sonra ilk quizi sıraya göre açmak için dizi hazırlıyoruz
+        const mevcutQuizler = [];
+        let tamamlananKontrol = 0;
 
         for (let i = 1; i <= 100; i++) {
             const dosyaAdi = `${i}.html`;
@@ -57,28 +55,32 @@
             fetch(dosyaAdi, { method: 'HEAD' })
             .then(res => {
                 if (res.ok) {
-                    // Dosya varsa butonunu görünür yap
+                    // Dosya varsa butonunu görünür yap. Buton HTML'de zaten doğru sırada 
+                    // beklediği için hangisi önce yanıt verirse versin yerleşim sırası ŞASMAZ!
                     document.getElementById(`btn_q${i}`).style.display = 'block';
-                    
-                    // Mevcut olan en küçük numaralı quizi ilk açılış için hafızaya al
-                    if (!ilkBulunanQuizId || i < parseInt(ilkBulunanQuizId.replace('q',''))) {
-                        ilkBulunanQuizId = `q${i}`;
-                    }
+                    mevcutQuizler.push(i);
                 }
-                kontrolBitti();
+                aksiyonKontrol();
             })
             .catch(() => {
-                // Dosya yoksa veya silinmişse hiçbir şey yapma, gizli kalmaya devam etsin
-                kontrolBitti();
+                // Dosya yoksa veya silinmişse buton gizli kalmaya devam eder
+                aksiyonKontrol();
             });
         }
 
-        // Tüm dosyalar taranınca en küçük numaralı olan quizi otomatik açar
-        function kontrolBitti() {
-            kontrolEdilenler++;
-            if (kontrolEdilenler === 100 && ilkBulunanQuizId) {
-                document.getElementById(ilkBulunanQuizId).style.display = 'block';
-                document.getElementById(`btn_${ilkBulunanQuizId}`).classList.add('active');
+        // 3. ADIM: 100 dosyanın tamamı tarandığı an en küçük numaralı mevcut quizi hatasız açar
+        function aksiyonKontrol() {
+            tamamlananKontrol++;
+            if (tamamlananKontrol === 100 && mevcutQuizler.length > 0) {
+                // Mevcut numaraları küçükten büyüğe sırala (Garanti yöntem)
+                mevcutQuizler.sort((a, b) => a - b);
+                
+                const enKucukQuizNo = mevcutQuizler[0];
+                const ilkQuizId = `q${enKucukQuizNo}`;
+                
+                // En küçük numaralı mevcut quizi ve butonunu aktif et
+                document.getElementById(ilkQuizId).style.display = 'block';
+                document.getElementById(`btn_${ilkQuizId}`).classList.add('active');
             }
         }
 
