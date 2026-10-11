@@ -8,7 +8,7 @@
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f4f7f6; }
         .nav-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #ccc; padding-bottom: 10px; }
         
-        /* Butonlar başlangıçta gizlidir, dosya varsa görünecek */
+        /* Butonlar başlangıçta gizlidir */
         .tab-btn { display: none; padding: 12px 24px; border: none; background: #e0e0e0; cursor: pointer; font-size: 16px; font-weight: bold; border-radius: 5px; transition: 0.3s; }
         .tab-btn:hover { background: #bbb; }
         .tab-btn.active { background: #007bff; color: white; }
@@ -27,45 +27,59 @@
     <script>
         const buttonArea = document.getElementById('buttonArea');
         const quizArea = document.getElementById('quizArea');
-        let ilkQuizAcildi = false;
+        
+        // 1. ADIM: 1'den 100'e kadar olan tüm yuvaları sıralı olarak önceden oluştur
+        // Böylece internet hangisini önce indirirse indirsin, sırası asla bozulmaz!
+        for (let i = 1; i <= 100; i++) {
+            // Butonu sırasına göre yerleştir (Görünmez olarak)
+            const btn = document.createElement('button');
+            btn.className = 'tab-btn';
+            btn.id = `btn_q${i}`;
+            btn.innerText = `Quiz ${i}`;
+            btn.onclick = (e) => openQuiz(`q${i}`, e.currentTarget);
+            buttonArea.appendChild(btn);
 
-        // 1'den 100'e kadar olan tüm numaraları sırayla kontrol et
+            // Quiz alanını sırasına göre yerleştir
+            const div = document.createElement('div');
+            div.id = `q${i}`;
+            div.className = 'quiz-container';
+            div.innerHTML = `<iframe src="${i}.html"></iframe>`;
+            quizArea.appendChild(div);
+        }
+
+        // 2. ADIM: Dosyaların varlığını kontrol et ve olanları sırasını bozmadan göster
+        let ilkBulunanQuizId = null;
+        let kontrolEdilenler = 0;
+
         for (let i = 1; i <= 100; i++) {
             const dosyaAdi = `${i}.html`;
 
-            // GitHub üzerinde dosyanın var olup olmadığını kontrol eden evrensel istek (fetch)
             fetch(dosyaAdi, { method: 'HEAD' })
             .then(res => {
-                // Eğer dosya VNSA ve silinmemişse (Sunucu 200 OK döndüyse)
                 if (res.ok) {
-                    // 1. BUTONU OLUŞTUR
-                    const btn = document.createElement('button');
-                    btn.className = 'tab-btn';
-                    btn.id = `btn_q${i}`;
-                    btn.style.display = 'block'; // Dosya olduğu için görünür yap
-                    btn.innerText = `Quiz ${i}`;
-                    btn.onclick = (e) => openQuiz(`q${i}`, e.currentTarget);
-                    buttonArea.appendChild(btn);
-
-                    // 2. QUIZ ALANINI OLUŞTUR
-                    const div = document.createElement('div');
-                    div.id = `q${i}`;
-                    div.className = 'quiz-container';
-                    div.innerHTML = `<iframe src="${dosyaAdi}"></iframe>`;
-                    quizArea.appendChild(div);
-
-                    // Eğer listelenen İLK mevcut quiz ise ekran açıldığında doğrudan göster
-                    if (!ilkQuizAcildi) {
-                        div.style.display = 'block';
-                        btn.classList.add('active');
-                        ilkQuizAcildi = true;
+                    // Dosya varsa butonunu görünür yap
+                    document.getElementById(`btn_q${i}`).style.display = 'block';
+                    
+                    // Mevcut olan en küçük numaralı quizi ilk açılış için hafızaya al
+                    if (!ilkBulunanQuizId || i < parseInt(ilkBulunanQuizId.replace('q',''))) {
+                        ilkBulunanQuizId = `q${i}`;
                     }
                 }
+                kontrolBitti();
             })
-            .catch(err => {
-                // Dosya yoksa veya silindiyse hiçbir şey yapma, otomatik atlasın.
-                console.log(`${dosyaAdi} bulunamadı veya silinmiş.`);
+            .catch(() => {
+                // Dosya yoksa veya silinmişse hiçbir şey yapma, gizli kalmaya devam etsin
+                kontrolBitti();
             });
+        }
+
+        // Tüm dosyalar taranınca en küçük numaralı olan quizi otomatik açar
+        function kontrolBitti() {
+            kontrolEdilenler++;
+            if (kontrolEdilenler === 100 && ilkBulunanQuizId) {
+                document.getElementById(ilkBulunanQuizId).style.display = 'block';
+                document.getElementById(`btn_${ilkBulunanQuizId}`).classList.add('active');
+            }
         }
 
         function openQuiz(quizId, clickedBtn) {
