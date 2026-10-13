@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interchange Intro • Prepositions of Place & Time (50 Soru)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f0f4fa;
+            padding: 2rem 1rem;
+            color: #1e2b3c;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #0b3b5c;
+            margin-bottom: 0.25rem;
+        }
+        .subhead {
+            font-size: 1.1rem;
+            color: #2c5a7a;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #1e7e9c;
+            padding-left: 1rem;
+            background: #e8f0f7;
+            border-radius: 0 12px 12px 0;
+            padding: 0.75rem 1.25rem;
+        }
+        .test-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+        }
+        .question-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 8px 20px rgba(0, 20, 30, 0.08);
+            padding: 1.5rem 1.75rem;
+            border: 1px solid #d9e5f0;
+        }
+        .question-header {
+            display: flex;
+            gap: 0.75rem;
+            align-items: baseline;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .q-number {
+            font-weight: 700;
+            font-size: 1.3rem;
+            background: #1e7e9c;
+            color: white;
+            border-radius: 40px;
+            padding: 0.15rem 1rem;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+        .q-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            line-height: 2.2;
+            flex: 1;
+            min-width: 250px;
+        }
+        .word-btn {
+            display: inline-block;
+            background: #eef4fc;
+            border: 1.5px solid #b8d0e0;
+            color: #0b3b5c;
+            font-weight: 600;
+            border-radius: 20px;
+            padding: 0.1rem 0.7rem;
+            margin: 0 0.1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.1s;
+            white-space: nowrap;
+            line-height: 1.4;
+            vertical-align: middle;
+        }
+        .word-btn:hover {
+            background: #cfe3f5;
+            border-color: #1e7e9c;
+        }
+        .word-btn:active {
+            transform: scale(0.95);
+        }
+        .word-btn.active {
+            background: #1e7e9c;
+            color: white;
+            border-color: #0b3b5c;
+        }
+        .word-translation {
+            display: inline-block;
+            background: #fff4d9;
+            border: 1.5px solid #e6a017;
+            color: #5a3e00;
+            font-weight: 600;
+            border-radius: 20px;
+            padding: 0.15rem 0.9rem;
+            margin: 0 0.15rem;
+            font-size: 0.95rem;
+            animation: fadeIn 0.15s ease;
+            vertical-align: middle;
+            line-height: 1.5;
+        }
+        .word-translation .grammar-note {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #8a6d1f;
+            margin-top: 0.15rem;
+            font-style: italic;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            margin-top: 1.4rem;
+        }
+        .option-btn {
+            text-align: left;
+            background: #f9fcff;
+            border: 1.5px solid #cbdae9;
+            border-radius: 16px;
+            padding: 0.85rem 1.2rem;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #1b3a4e;
+            cursor: pointer;
+            transition: 0.1s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            line-height: 1.5;
+        }
+        .option-btn:hover {
+            background: #e5f0fa;
+            border-color: #7ea9c7;
+        }
+        .option-btn.active-opt {
+            border-color: #1e7e9c;
+            background: #e8f2fb;
+        }
+        .option-btn .opt-marker {
+            font-weight: 700;
+            color: #1e7e9c;
+            flex-shrink: 0;
+        }
+        .option-feedback {
+            background: #f0f7fe;
+            border-radius: 12px;
+            padding: 0.7rem 1.2rem;
+            font-size: 0.95rem;
+            color: #104a6e;
+            border-left: 4px solid #1e7e9c;
+            display: none;
+            box-shadow: inset 0 0 0 1px #cfe0ed;
+            margin-top: -0.2rem;
+        }
+        .option-feedback.show {
+            display: block;
+        }
+        .option-feedback.correct-fb {
+            background: #e8f8ef;
+            border-left-color: #1f9d55;
+            color: #0f4a2a;
+        }
+        .option-feedback.wrong-fb {
+            background: #fdeeee;
+            border-left-color: #c0392b;
+            color: #5e1a12;
+        }
+        .option-feedback .grammar-summary {
+            display: block;
+            margin-top: 0.4rem;
+            padding-top: 0.4rem;
+            border-top: 1px dashed rgba(0,0,0,0.15);
+            font-size: 0.88rem;
+            color: #2c5a7a;
+            font-style: italic;
+        }
+        .instruction-note {
+            background: #fff6e0;
+            border-radius: 16px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 6px solid #e6a017;
+            font-size: 1rem;
+            color: #3d2f0c;
+            line-height: 1.6;
+        }
+        .instruction-note strong {
+            color: #7a4a00;
+        }
+        .footer-note {
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #4b6d85;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Prepositions of Place &amp; Time</h1>
+    <div class="subhead">Cambridge Interchange Intro • 50 soru • Her kelime tıklanabilir</div>
+
+    <div class="instruction-note">
+        <strong>Her mavi kelimeye tıkla:</strong> Önce kelime İngilizce okunur, sonra Türkçe çevirisi ve dilbilgisi açıklaması Türkçe olarak seslendirilir.<br>
+        <strong>Yeni bir kelimeye tıkla:</strong> Önceki açıklama otomatik kapanır.<br>
+        <strong>Herhangi bir şıkka tıkla:</strong> Şık İngilizce seslendirilir, neden doğru/yanlış olduğu ve dilbilgisi özeti görünür.
+    </div>
+
+    <div class="test-grid" id="testContainer"></div>
+    <div class="footer-note">Interchange Intro seviyesi • Yer ve zaman edatları • 50 soru</div>
+</div>
+
+<script>
+    // ------------------------------------------------------------
+    // SÖZLÜK - eksiksiz çeviri + dilbilgisi açıklaması
+    // ------------------------------------------------------------
+    const dictionary = {
+        "am": { tr: "-im, -ım (ben)", note: "Yardımcı fiil. 'I' ile kullanılır. Örnek: I am happy = Ben mutluyum." },
+        "is": { tr: "-dir, -dır (o)", note: "Yardımcı fiil. He, She, It ile kullanılır. Örnek: She is a teacher = O bir öğretmen." },
+        "are": { tr: "-dir, -dır (sen/biz/onlar)", note: "Yardımcı fiil. You, We, They ile kullanılır. Örnek: They are here = Onlar burada." },
+        "was": { tr: "-di, -dı (geçmiş)", note: "Geçmiş zaman yardımcı fiili. I, He, She, It ile kullanılır." },
+        "were": { tr: "-di, -dı (geçmiş)", note: "Geçmiş zaman yardımcı fiili. You, We, They ile kullanılır." },
+        "the": { tr: "belirli tanımlık", note: "İsmin önüne gelir. 'O, şu, belirli olan' anlamı katar. Türkçede bazen çevrilmez." },
+        "a": { tr: "bir (belirsiz)", note: "Sessiz harfle başlayan isimlerden önce kullanılır. Örnek: a cat = bir kedi." },
+        "an": { tr: "bir (belirsiz)", note: "Sesli harfle başlayan isimlerden önce kullanılır. Örnek: an apple = bir elma." },
+        "don't": { tr: "yapmam, yapmıyorum", note: "Olumsuz yardımcı fiil. Do not kelimesinin kısaltması." },
+        "can": { tr: "-ebilmek, -abilmek", note: "Yetenek bildiren yardımcı fiil. Örnek: I can swim = Yüzebilirim." },
+        "can't": { tr: "yapamaz, -emez", note: "Yapamama bildirir. Cannot kelimesinin kısaltması." },
+        "let's": { tr: "haydi ...-elim", note: "Öneri bildirir. Let us kelimesinin kısaltması. Örnek: Let's go = Haydi gidelim." },
+        "it's": { tr: "o ...-dir", note: "It is kelimesinin kısaltması." },
+        "i'm": { tr: "ben ...-im", note: "I am kelimesinin kısaltması." },
+        "not": { tr: "değil, -me, -ma", note: "Olumsuzluk eki." },
+        "to": { tr: "-e, -a (yönelme)", note: "Yönelme edatı. Örnek: go to school = okula git." },
+        "of": { tr: "-in, -ın (aitlik)", note: "Aitlik edatı. Örnek: corner of = ...-in köşesi." },
+        "same": { tr: "aynı", note: "Sıfat. Örnek: same street = aynı sokak." },
+        "third": { tr: "üçüncü", note: "Sıra sayısı." },
+        "5th": { tr: "beşinci", note: "Sıra sayısı. Fifth kelimesinin kısaltması." },
+        "each other": { tr: "birbirini", note: "Karşılıklılık bildirir. Örnek: next to each other = birbirinin yanında." },
+        "minutes": { tr: "dakikalar", note: "Zaman birimi. Minute kelimesinin çoğulu." },
+        "minute": { tr: "dakika", note: "Zaman birimi." },
+        "hour": { tr: "saat (süre)", note: "Zaman birimi." },
+        "day": { tr: "gün", note: "Zaman birimi." },
+        "week": { tr: "hafta", note: "Zaman birimi." },
+        "month": { tr: "ay (takvim)", note: "Zaman birimi." },
+        "year": { tr: "yıl", note: "Zaman birimi." },
+        "it": { tr: "o (nesne)", note: "Cansız varlıklar için kullanılan zamir." },
+        "be": { tr: "olmak", note: "Fiilin yalın hali. Örnek: should be = olmalı." },
+        "should": { tr: "-meli, -malı", note: "Öneri bildiren yardımcı fiil. Örnek: We should be = Olmalıyız." },
+        "cross": { tr: "karşıya geçmek", note: "Fiil. Örnek: cross the street = sokağın karşısına geç." },
+        "walk": { tr: "yürümek", note: "Fiil." },
+        "need": { tr: "ihtiyaç duymak", note: "Fiil." },
+        "have": { tr: "sahip olmak / var", note: "Fiil. Örnek: I have = Bende var." },
+        "go": { tr: "gitmek", note: "Hareket fiili." },
+        "leaves": { tr: "kalkar/ayrılır", note: "Fiil. Örnek: The train leaves = Tren kalkar." },
+        "meet": { tr: "buluşmak", note: "Fiil." },
+        "starts": { tr: "başlar", note: "Fiil." },
+        "was born": { tr: "doğdu", note: "Geçmiş zaman edilgen yapı." },
+        "born": { tr: "doğmuş", note: "Doğmak fiilinin geçmiş ortacı." },
+        "sleeping": { tr: "uyuyor", note: "Şimdiki zaman ortacı. Uyumak fiilinden." },
+        "wake up": { tr: "uyanmak", note: "Yataktan kalkmak anlamında fiil." },
+        "hiding": { tr: "saklanıyor", note: "Şimdiki zaman ortacı. Saklanmak fiilinden." },
+        "see": { tr: "görmek", note: "Görme fiili." },
+        "take out": { tr: "çıkarmak", note: "Dışarı almak anlamında fiil." },
+        "study": { tr: "ders çalışmak", note: "Fiil." },
+        "works": { tr: "çalışıyor", note: "Fiil." },
+        "lives": { tr: "yaşıyor", note: "Fiil." },
+        "sits": { tr: "oturuyor", note: "Fiil." },
+        "hangs": { tr: "asılı", note: "Fiil." },
+        "stands": { tr: "duruyor", note: "Fiil." },
+        "parked": { tr: "park edilmiş", note: "Fiil." },
+        "waiting": { tr: "bekliyor", note: "Şimdiki zaman ortacı." },
+        "playing": { tr: "oynuyor", note: "Şimdiki zaman ortacı." },
+        "flying": { tr: "uçuyor", note: "Şimdiki zaman ortacı." },
+        "swimming": { tr: "yüzüyor", note: "Şimdiki zaman ortacı." },
+        "reading": { tr: "okuyor", note: "Şimdiki zaman ortacı." },
+        "writing": { tr: "yazıyor", note: "Şimdiki zaman ortacı." },
+        "cooking": { tr: "yemek yapıyor", note: "Şimdiki zaman ortacı." },
+        "watching": { tr: "izliyor", note: "Şimdiki zaman ortacı." },
+        "celebrate": { tr: "kutlamak", note: "Fiil." },
+        "get up": { tr: "kalkmak", note: "Yataktan kalkmak anlamında fiil." },
+        "early": { tr: "erken", note: "Zarf." },
+        "closes": { tr: "kapanır", note: "Fiil." },
+        "opens": { tr: "açılır", note: "Fiil." },
+        "do": { tr: "yapmak", note: "Fiil." },
+        "homework": { tr: "ev ödevi", note: "İsim." },
+        "movies": { tr: "filmler", note: "İsim. Movie kelimesinin çoğulu." },
+        "watch": { tr: "izlemek", note: "Fiil." },
+        "celebrates": { tr: "kutlar", note: "Fiil." },
+        "usually": { tr: "genellikle", note: "Sıklık zarfı." },
+        "very hot": { tr: "çok sıcak", note: "Hava durumu ifadesi." },
+        "today": { tr: "bugün", note: "Zaman zarfı." },
+        "there": { tr: "orada", note: "Yer belirteci." },
+
+        // Yer edatları
+        "in": { tr: "içinde", note: "Yer edatı. Bir şeyin içinde olduğunu söyler. Örnek: in the box = kutunun içinde." },
+        "on": { tr: "üzerinde", note: "Yer edatı. Bir yüzeyin üstünde olduğunu söyler. Örnek: on the table = masanın üzerinde." },
+        "under": { tr: "altında", note: "Yer edatı. Bir şeyin altında olduğunu söyler. Örnek: under the table = masanın altında." },
+        "behind": { tr: "arkasında", note: "Yer edatı. Bir şeyin arkasında olduğunu söyler. Örnek: behind the door = kapının arkasında." },
+        "next to": { tr: "yanında", note: "Yer edatı. Hemen yanında, bitişiğinde demektir. Örnek: next to the bank = bankanın yanında." },
+        "in front of": { tr: "önünde", note: "Yer edatı. Bir şeyin önünde olduğunu söyler. Örnek: in front of the school = okulun önünde." },
+        "between": { tr: "arasında", note: "Yer edatı. İki şey arasında demektir. Örnek: between A and B = A ile B arasında." },
+        "across from": { tr: "karşısında", note: "Yer edatı. Yolun veya alanın karşısında demektir. Örnek: across from the park = parkın karşısında." },
+        "on the corner of": { tr: "köşesinde", note: "Yer ifadesi. İki sokağın kesiştiği köşede demektir." },
+        "above": { tr: "üstünde (yukarıda)", note: "Yer edatı. Bir şeyin daha yukarısında olduğunu söyler." },
+        "below": { tr: "altında (aşağıda)", note: "Yer edatı. Bir şeyin daha aşağısında olduğunu söyler." },
+        "near": { tr: "yakınında", note: "Yer edatı. Çok yakın ama bitişik değil demektir." },
+        "over": { tr: "üzerinde (kaplayarak)", note: "Yer edatı. Bir şeyin üstünü kaplayarak demektir. Örnek: over the river = nehrin üzerinde." },
+        "opposite": { tr: "karşısında", note: "Yer edatı. Tam karşısında demektir." },
+
+        // Zaman edatları
+        "at": { tr: "-de, -da (saat/gece)", note: "Zaman edatı. Saatler ve gece için kullanılır. Örnek: at 7 o'clock = saat 7'de, at night = gece." },
+        "morning": { tr: "sabah", note: "Günün ilk bölümü. Genellikle 'in the morning' şeklinde kullanılır." },
+        "afternoon": { tr: "öğleden sonra", note: "Öğle ile akşam arası. 'in the afternoon' şeklinde kullanılır." },
+        "evening": { tr: "akşam", note: "Akşamüstü. 'in the evening' şeklinde kullanılır." },
+        "night": { tr: "gece", note: "Karanlık saatler. 'at night' şeklinde kullanılır." },
+        "noon": { tr: "öğlen (12:00)", note: "Gün ortası. 'at noon' şeklinde kullanılır." },
+        "midnight": { tr: "gece yarısı (00:00)", note: "Gece 12. 'at midnight' şeklinde kullanılır." },
+        "Monday": { tr: "Pazartesi", note: "Haftanın ilk günü. 'on Monday' şeklinde kullanılır." },
+        "Tuesday": { tr: "Salı", note: "Haftanın ikinci günü. 'on Tuesday'." },
+        "Wednesday": { tr: "Çarşamba", note: "Haftanın üçüncü günü. 'on Wednesday'." },
+        "Thursday": { tr: "Perşembe", note: "Haftanın dördüncü günü. 'on Thursday'." },
+        "Friday": { tr: "Cuma", note: "Haftanın beşinci günü. 'on Friday'." },
+        "Saturday": { tr: "Cumartesi", note: "Hafta sonu günü. 'on Saturday'." },
+        "Sunday": { tr: "Pazar", note: "Hafta sonu günü. 'on Sunday'." },
+        "weekdays": { tr: "hafta içi günleri", note: "Pazartesi ile Cuma arası günler." },
+        "weekend": { tr: "hafta sonu", note: "Cumartesi ve Pazar. 'on the weekend'." },
+        "January": { tr: "Ocak", note: "Yılın ilk ayı. 'in January'." },
+        "February": { tr: "Şubat", note: "Yılın ikinci ayı." },
+        "March": { tr: "Mart", note: "Yılın üçüncü ayı. 'in March'." },
+        "April": { tr: "Nisan", note: "Yılın dördüncü ayı." },
+        "May": { tr: "Mayıs", note: "Yılın beşinci ayı." },
+        "June": { tr: "Haziran", note: "Yılın altıncı ayı." },
+        "July": { tr: "Temmuz", note: "Yılın yedinci ayı. 'in July'." },
+        "August": { tr: "Ağustos", note: "Yılın sekizinci ayı." },
+        "September": { tr: "Eylül", note: "Yılın dokuzuncu ayı." },
+        "October": { tr: "Ekim", note: "Yılın onuncu ayı." },
+        "November": { tr: "Kasım", note: "Yılın on birinci ayı." },
+        "December": { tr: "Aralık", note: "Yılın on ikinci ayı. 'in December'." },
+        "1990": { tr: "1990 (yıl)", note: "Yıllar her zaman 'in' alır. Örnek: in 1990 = 1990'da." },
+        "1995": { tr: "1995 (yıl)", note: "Yıllar 'in' alır." },
+        "2024": { tr: "2024 (yıl)", note: "Yıllar 'in' alır." },
+        "7 o'clock": { tr: "saat 7", note: "Saatler 'at' alır. Örnek: at 7 o'clock = saat 7'de." },
+        "8 PM": { tr: "akşam 8", note: "PM öğleden sonra ve akşamı belirtir. 'at 8 PM'." },
+        "3 PM": { tr: "öğleden sonra 3", note: "'at 3 PM'." },
+        "2 PM": { tr: "öğleden sonra 2", note: "'at 2 PM'." },
+        "9 PM": { tr: "akşam 9", note: "'at 9 PM'." },
+        "9:30": { tr: "dokuz otuz", note: "Saat 9:30. 'at 9:30'." },
+        "10 o'clock": { tr: "saat 10", note: "Saatler 'at' alır." },
+        "7:45": { tr: "yedi kırk beş", note: "Saat 7:45. 'at 7:45'." },
+        "6 AM": { tr: "sabah 6", note: "AM sabahı belirtir. 'at 6 AM'." },
+        "the morning": { tr: "sabahleyin", note: "'in the morning' = sabahleyin." },
+        "the afternoon": { tr: "öğleden sonra", note: "'in the afternoon'." },
+        "the evening": { tr: "akşamleyin", note: "'in the evening'." },
+        "the weekend": { tr: "hafta sonu", note: "'on the weekend'." },
+        "the sun": { tr: "güneş", note: "Gökyüzü cismi." },
+        "Monday morning": { tr: "Pazartesi sabahı", note: "Gün + sabah için 'on' kullanılır." },
+        "Friday evening": { tr: "Cuma akşamı", note: "'on Friday evening'." },
+        "Friday night": { tr: "Cuma gecesi", note: "'on Friday night'." },
+        "Saturday evening": { tr: "Cumartesi akşamı", note: "'on Saturday evening'." },
+        "Sunday afternoon": { tr: "Pazar öğleden sonrası", note: "'on Sunday afternoon'." },
+        "Tuesday night": { tr: "Salı gecesi", note: "'on Tuesday night'." },
+        "New Year": { tr: "Yeni Yıl", note: "Özel gün." },
+        "January 1st": { tr: "1 Ocak", note: "Tarih. 'on January 1st'." },
+        "January 5th": { tr: "5 Ocak", note: "Tarih. 'on January 5th'." },
+        "July 12th": { tr: "12 Temmuz", note: "Tarih. 'on July 12th'." },
+        "December 25th": { tr: "25 Aralık", note: "Tarih. 'on December 25th'." },
+
+        // İsimler
+        "table": { tr: "masa", note: "Mobilya." },
+        "box": { tr: "kutu", note: "Eşya kabı." },
+        "chair": { tr: "sandalye", note: "Oturma mobilyası." },
+        "sofa": { tr: "kanape", note: "Oturma mobilyası." },
+        "bed": { tr: "yatak", note: "Uyuma mobilyası." },
+        "bank": { tr: "banka", note: "Para işlemleri yapılan yer." },
+        "supermarket": { tr: "süpermarket", note: "Büyük market." },
+        "library": { tr: "kütüphane", note: "Kitap ödünç alınan yer." },
+        "restaurant": { tr: "restoran", note: "Yemek yenen yer." },
+        "cafe": { tr: "kafe", note: "Kahve içilen yer." },
+        "school": { tr: "okul", note: "Eğitim yeri." },
+        "park": { tr: "park", note: "Yeşil dinlenme alanı." },
+        "street": { tr: "sokak", note: "Yol." },
+        "avenue": { tr: "cadde", note: "Geniş yol." },
+        "corner": { tr: "köşe", note: "İki yolun kesiştiği yer." },
+        "building": { tr: "bina", note: "Yapı." },
+        "apartment": { tr: "daire", note: "Konut birimi." },
+        "flat": { tr: "daire", note: "İngiliz İngilizcesi'nde daire." },
+        "bedroom": { tr: "yatak odası", note: "Uyuma odası." },
+        "kitchen": { tr: "mutfak", note: "Yemek yapılan oda." },
+        "bathroom": { tr: "banyo", note: "Yıkanma odası." },
+        "living room": { tr: "oturma odası", note: "Oturma alanı." },
+        "door": { tr: "kapı", note: "Giriş ve çıkış." },
+        "window": { tr: "pencere", note: "Işık girişi." },
+        "floor": { tr: "kat, zemin", note: "Bina katı veya yer." },
+        "wall": { tr: "duvar", note: "Oda sınırı." },
+        "picture": { tr: "resim", note: "Görsel." },
+        "cat": { tr: "kedi", note: "Evcil hayvan." },
+        "dog": { tr: "köpek", note: "Evcil hayvan." },
+        "bird": { tr: "kuş", note: "Hayvan." },
+        "fish": { tr: "balık", note: "Hayvan." },
+        "ball": { tr: "top", note: "Yuvarlak oyun aracı." },
+        "book": { tr: "kitap", note: "Okuma aracı." },
+        "pencil": { tr: "kalem", note: "Yazma aracı." },
+        "bag": { tr: "çanta", note: "Eşya taşıma." },
+        "car": { tr: "araba", note: "Taşıt." },
+        "bicycle": { tr: "bisiklet", note: "Taşıt." },
+        "tree": { tr: "ağaç", note: "Bitki." },
+        "moon": { tr: "ay", note: "Gökyüzü cismi." },
+        "sky": { tr: "gökyüzü", note: "Yukarısı." },
+        "stars": { tr: "yıldızlar", note: "Gökyüzü cisimleri." },
+        "river": { tr: "nehir", note: "Su akıntısı." },
+        "water": { tr: "su", note: "Sıvı." },
+        "bridge": { tr: "köprü", note: "Geçiş yapısı." },
+        "hospital": { tr: "hastane", note: "Tedavi yeri." },
+        "station": { tr: "istasyon", note: "Tren ve otobüs durağı." },
+        "airport": { tr: "havalimanı", note: "Uçak kalkış ve varış." },
+        "museum": { tr: "müze", note: "Tarih ve sanat sergisi." },
+        "theater": { tr: "tiyatro", note: "Gösteri yeri." },
+        "cinema": { tr: "sinema", note: "Film gösterim yeri." },
+        "gym": { tr: "spor salonu", note: "Egzersiz yeri." },
+        "market": { tr: "pazar/market", note: "Alışveriş yeri." },
+        "pharmacy": { tr: "eczane", note: "İlaç satış yeri." },
+        "bakery": { tr: "fırın", note: "Ekmek ve tatlı satış yeri." },
+        "bookstore": { tr: "kitapçı", note: "Kitap satış yeri." },
+        "flower shop": { tr: "çiçekçi", note: "Çiçek satış yeri." },
+        "toy store": { tr: "oyuncakçı", note: "Oyuncak satış yeri." },
+        "shoe store": { tr: "ayakkabı mağazası", note: "Ayakkabı satış yeri." },
+        "clothes shop": { tr: "giyim mağazası", note: "Kıyafet satış yeri." },
+        "post office": { tr: "postane", note: "Posta hizmetleri." },
+        "police station": { tr: "polis karakolu", note: "Güvenlik birimi." },
+        "fire station": { tr: "itfaiye", note: "Yangın birimi." },
+        "house": { tr: "ev", note: "Konut." },
+        "Main Street": { tr: "Ana Sokak", note: "Sokak adı." },
+        "First Avenue": { tr: "Birinci Cadde", note: "Cadde adı." },
+        "Oak Street": { tr: "Meşe Sokak", note: "Sokak adı." },
+        "Pine Avenue": { tr: "Çam Caddesi", note: "Cadde adı." },
+        "Park Street": { tr: "Park Sokak", note: "Sokak adı." },
+        "Museum Road": { tr: "Müze Yolu", note: "Yol adı." },
+        "First Street": { tr: "Birinci Sokak", note: "Sokak adı." },
+        "Second Avenue": { tr: "İkinci Cadde", note: "Cadde adı." },
+        "party": { tr: "parti", note: "Kutlama." },
+        "meeting": { tr: "toplantı", note: "İş görüşmesi." },
+        "movie": { tr: "film", note: "Sinema filmi." },
+        "train": { tr: "tren", note: "Taşıt." },
+        "bus": { tr: "otobüs", note: "Taşıt." },
+        "birthday": { tr: "doğum günü", note: "Özel gün." },
+        "sister": { tr: "kız kardeş", note: "Aile üyesi." },
+        "brother": { tr: "erkek kardeş", note: "Aile üyesi." },
+        "brother's": { tr: "erkek kardeşin", note: "Aitlik bildiren isim." },
+        "mother": { tr: "anne", note: "Aile üyesi." },
+        "father": { tr: "baba", note: "Aile üyesi." },
+        "friend": { tr: "arkadaş", note: "Kişi." },
+        "teacher": { tr: "öğretmen", note: "Kişi." },
+        "student": { tr: "öğrenci", note: "Kişi." },
+        "doctor": { tr: "doktor", note: "Kişi." },
+        "nurse": { tr: "hemşire", note: "Kişi." },
+        "store": { tr: "dükkan", note: "İş yeri." },
+        "same street": { tr: "aynı sokak", note: "Konum ifadesi." },
+        "my": { tr: "benim", note: "İyelik sıfatı." },
+        "her": { tr: "onun (kadın)", note: "İyelik sıfatı." },
+        "his": { tr: "onun (erkek)", note: "İyelik sıfatı." },
+        "English class": { tr: "İngilizce dersi", note: "Ders." },
+        "dentist appointment": { tr: "dişçi randevusu", note: "Randevu." },
+        "third floor": { tr: "üçüncü kat", note: "Bina katı." },
+        "5th floor": { tr: "beşinci kat", note: "Bina katı." }
+    };
+
+    // ------------------------------------------------------------
+    // ŞIK DİLBİLGİSİ ÖZETLERİ
+    // ------------------------------------------------------------
+    const optionGrammarSummary = {
+        "in": "in yer edatıdır ve bir şeyin İÇİNDE olduğunu söyler. Örnek: in the box = kutunun içinde.",
+        "on": "on yer edatıdır ve bir yüzeyin ÜZERİNDE olduğunu söyler. Örnek: on the table = masanın üzerinde.",
+        "under": "under yer edatıdır ve bir şeyin ALTINDA olduğunu söyler. Örnek: under the bed = yatağın altında.",
+        "behind": "behind yer edatıdır ve bir şeyin ARKASINDA olduğunu söyler. Örnek: behind the door = kapının arkasında.",
+        "next to": "next to yer edatıdır ve HEMEN YANINDA demektir. Örnek: next to the bank = bankanın yanında.",
+        "in front of": "in front of yer edatıdır ve ÖNÜNDE demektir. Örnek: in front of the school = okulun önünde.",
+        "between": "between yer edatıdır ve İKİ ŞEYİN ARASINDA demektir. Örnek: between A and B = A ile B arasında.",
+        "across from": "across from yer edatıdır ve KARŞISINDA demektir. Örnek: across from the park = parkın karşısında.",
+        "on the corner of": "on the corner of ifadesi İKİ SOKAĞIN KÖŞESİNDE demektir.",
+        "above": "above yer edatıdır ve DAHA YUKARISINDA demektir. Örnek: above the sofa = kanepenin üstünde.",
+        "over": "over yer edatıdır ve ÜZERİNİ KAPLAYARAK demektir. Örnek: over the river = nehrin üzerinde.",
+        "near": "near yer edatıdır ve YAKININDA demektir. Örnek: near the station = istasyonun yakınında.",
+        "opposite": "opposite yer edatıdır ve TAM KARŞISINDA demektir.",
+        "at / in": "at saatler ve gece için kullanılır. in ise günün vakitleri için kullanılır. Örnek: at 7 o'clock, in the morning.",
+        "on / at": "on günler ve tarihler için kullanılır. at ise saatler için kullanılır. Örnek: on Monday, at 3 PM.",
+        "at / on": "at saatler için kullanılır. on günler için kullanılır. Örnek: at 9:30, on Tuesdays.",
+        "in / on": "in aylar ve yıllar için kullanılır. on tarihler için kullanılır. Örnek: in July, on July 12th.",
+        "on / in": "on günler için kullanılır. in günün vakitleri için kullanılır. Örnek: on Monday, in the morning.",
+        "in / at": "in aylar ve yıllar için kullanılır. at saatler için kullanılır. Örnek: in January, at 3 PM.",
+        "at / at": "İki yerde de at kullanılır çünkü ikisi de saat bildirir.",
+        "in / in": "İki yerde de in kullanılır çünkü ikisi de ay veya yıl bildirir.",
+        "at": "at zaman edatıdır ve SAATLER, GECE, ÖĞLEN, GECE YARISI için kullanılır.",
+        "in": "in zaman edatıdır ve AYLAR, YILLAR, GÜNÜN VAKİTLERİ için kullanılır.",
+        "on": "on zaman edatıdır ve GÜNLER, TARİHLER, HAFTA SONU için kullanılır.",
+        "between / in": "between İKİ ŞEY ARASINDA demektir. in İÇİNDE demektir.",
+        "under / in": "under ALTINDA demektir. in İÇİNDE demektir.",
+        "on / above": "on YÜZEYDE demektir. above DAHA YUKARIDA demektir.",
+        "over / on": "over ÜZERİNDE KAPLAYARAK demektir. on YÜZEYDE demektir.",
+        "in / above": "in İÇİNDE demektir. above DAHA YUKARIDA demektir.",
+        "on / between": "on KAT için kullanılır. between ARASINDA demektir.",
+        "in / next to": "in İÇİNDE demektir. next to YANINDA demektir.",
+        "on / behind": "on ÜZERİNDE demektir. behind ARKASINDA demektir.",
+        "at / across from": "at SAATLER için kullanılır. across from KARŞISINDA demektir."
+    };
+
+    // ------------------------------------------------------------
+    // 50 SORU
+    // ------------------------------------------------------------
+    const questions = [
+        { text: "The cat is sleeping ___ the table.", words: ["The", "cat", "is", "sleeping", "table", "under"], options: ["in", "on", "under", "next to"], correct: 2, feedbacks: ["Yanlış. 'in' içinde anlamına gelir.", "Yanlış. 'on' üzerinde demektir.", "Doğru. 'under' altında demektir.", "Yanlış. 'next to' yanında demektir."] },
+        { text: "The book is ___ the sofa. Can you see it?", words: ["The", "book", "is", "sofa", "Can", "you", "see", "it", "on"], options: ["in", "on", "under", "behind"], correct: 1, feedbacks: ["Yanlış. 'in' içinde demektir.", "Doğru. 'on' üzerinde demektir.", "Yanlış. 'under' altında demektir.", "Yanlış. 'behind' arkasında demektir."] },
+        { text: "The cat is hiding ___ the door.", words: ["The", "cat", "is", "hiding", "door", "behind"], options: ["behind", "in front of", "next to", "under"], correct: 0, feedbacks: ["Doğru. 'behind' arkasında demektir.", "Yanlış. 'in front of' önünde demektir.", "Yanlış. 'next to' yanında demektir.", "Yanlış. 'under' altında demektir."] },
+        { text: "The pencil is ___ the bag. I can't see it.", words: ["The", "pencil", "is", "bag", "I", "can't", "see", "it", "in"], options: ["in", "on", "under", "next to"], correct: 0, feedbacks: ["Doğru. 'in the bag' çantanın içinde demektir.", "Yanlış. 'on the bag' üzerinde demektir.", "Yanlış. 'under the bag' altında demektir.", "Yanlış. 'next to' yanında demektir."] },
+        { text: "The ball is ___ the box. Can you take it out?", words: ["The", "ball", "is", "box", "Can", "you", "take out", "it", "in"], options: ["in", "on", "under", "behind"], correct: 0, feedbacks: ["Doğru. 'in the box' kutunun içinde demektir.", "Yanlış. 'on the box' üzerinde demektir.", "Yanlış. 'under the box' altında demektir.", "Yanlış. 'behind the box' arkasında demektir."] },
+        { text: "The cat is ___ the box. It's not ___ the box.", words: ["The", "cat", "is", "box", "It's", "not", "in", "on"], options: ["in / on", "on / in", "under / on", "behind / in"], correct: 0, feedbacks: ["Doğru. 'in the box' ve 'on the box' zıt anlamlı.", "Yanlış. 'on / in' tam tersi olurdu.", "Yanlış. 'under / on' kutu içinde değil.", "Yanlış. 'behind / in' uygun değil."] },
+        { text: "The car is ___ the tree. It's very hot today.", words: ["The", "car", "is", "tree", "It's", "very hot", "today", "under"], options: ["under", "on", "in", "behind"], correct: 0, feedbacks: ["Doğru. 'under the tree' ağacın altında demektir.", "Yanlış. 'on the tree' ağacın üzerinde.", "Yanlış. 'in the tree' ağacın içinde.", "Yanlış. 'behind the tree' arkasında demektir."] },
+        { text: "The picture is ___ the wall, ___ the sofa.", words: ["The", "picture", "is", "wall", "sofa", "on", "above"], options: ["on / above", "in / on", "on / under", "at / behind"], correct: 0, feedbacks: ["Doğru. 'on the wall' ve 'above the sofa'.", "Yanlış. 'in the wall' duvarın içinde olmaz.", "Yanlış. 'on / under' resim kanepenin altında olmaz.", "Yanlış. 'at / behind' duvarda 'at' kullanılmaz."] },
+        { text: "The dog is ___ the bed. It's sleeping ___ the bedroom.", words: ["The", "dog", "is", "bed", "It's", "sleeping", "bedroom", "under", "in"], options: ["under / in", "on / in", "in / on", "behind / on"], correct: 0, feedbacks: ["Doğru. 'under the bed' ve 'in the bedroom'.", "Yanlış. 'on the bed' yatağın üstünde.", "Yanlış. 'in the bed' yatağın içinde.", "Yanlış. 'behind / on' arkasında değil."] },
+        { text: "The moon is ___ the sky. The stars are ___ it.", words: ["The", "moon", "is", "sky", "The", "stars", "are", "it", "in", "above"], options: ["in / above", "on / under", "at / behind", "in / below"], correct: 0, feedbacks: ["Doğru. 'in the sky' ve 'above it'.", "Yanlış. 'on the sky' yanlış.", "Yanlış. 'at the sky' yanlış.", "Yanlış. 'in / below' yıldızlar ayın altında olmaz."] },
+        { text: "The bridge is ___ the river. You can walk ___ it.", words: ["The", "bridge", "is", "river", "You", "can", "walk", "it", "over", "on"], options: ["over / on", "on / over", "in / on", "above / in"], correct: 0, feedbacks: ["Doğru. 'over the river' ve 'on it'.", "Yanlış. 'on the river' yanlış.", "Yanlış. 'in the river' köprü suyun içinde değil.", "Yanlış. 'above / in' yürümek için 'on' gerekir."] },
+        { text: "The bird is flying ___ the tree.", words: ["The", "bird", "is", "flying", "tree", "above"], options: ["above", "under", "in", "behind"], correct: 0, feedbacks: ["Doğru. 'above' üstünde yani yukarıda demektir.", "Yanlış. 'under' altında demektir.", "Yanlış. 'in' içinde demektir.", "Yanlış. 'behind' arkasında demektir."] },
+        { text: "The fish is swimming ___ the water.", words: ["The", "fish", "is", "swimming", "water", "in"], options: ["in", "on", "under", "above"], correct: 0, feedbacks: ["Doğru. 'in the water' suyun içinde demektir.", "Yanlış. 'on the water' suyun üzerinde.", "Yanlış. 'under the water' suyun altında.", "Yanlış. 'above the water' suyun üstünde."] },
+        { text: "The bicycle is ___ the house.", words: ["The", "bicycle", "is", "house", "next to"], options: ["next to", "in", "under", "on"], correct: 0, feedbacks: ["Doğru. 'next to' yanında demektir.", "Yanlış. 'in' içinde demektir.", "Yanlış. 'under' altında demektir.", "Yanlış. 'on' üzerinde demektir."] },
+        { text: "The cat is ___ the chair. It's sleeping on the floor.", words: ["The", "cat", "is", "chair", "It's", "sleeping", "on", "the", "floor", "under"], options: ["under", "on", "in", "next to"], correct: 0, feedbacks: ["Doğru. 'under the chair' sandalyenin altında demektir.", "Yanlış. 'on the chair' sandalyenin üstünde.", "Yanlış. 'in the chair' sandalyenin içinde.", "Yanlış. 'next to' yanında demektir."] },
+        { text: "The bank is ___ the supermarket and the post office.", words: ["The", "bank", "is", "supermarket", "and", "the", "post office", "between"], options: ["between", "next to", "across from", "on the corner of"], correct: 0, feedbacks: ["Doğru. 'between' arasında demektir.", "Yanlış. 'next to' yanında demektir.", "Yanlış. 'across from' karşısında demektir.", "Yanlış. 'on the corner of' köşesinde demektir."] },
+        { text: "The restaurant is ___ the corner of Main Street and First Avenue.", words: ["The", "restaurant", "is", "corner", "Main Street", "and", "First Avenue", "on the corner of"], options: ["on", "in", "at", "between"], correct: 0, feedbacks: ["Doğru. 'on the corner of' köşesinde demektir.", "Yanlış. 'in the corner of' kapalı alanlar için.", "Yanlış. 'at the corner of' bazen olur ama 'on' tercih edilir.", "Yanlış. 'between' iki cadde arasında değil, köşesinde."] },
+        { text: "The library is ___ the school. They are on the same street.", words: ["The", "library", "is", "school", "They", "are", "on", "the", "same", "street", "across from"], options: ["across from", "between", "on the corner of", "behind"], correct: 0, feedbacks: ["Doğru. 'across from' karşısında demektir.", "Yanlış. 'between' arasında demektir.", "Yanlış. 'on the corner of' köşesinde demektir.", "Yanlış. 'behind' arkasında demektir."] },
+        { text: "The post office is ___ the bank. You can walk there in 2 minutes.", words: ["The", "post office", "is", "bank", "You", "can", "walk", "there", "in", "minutes", "next to"], options: ["next to", "between", "on the corner of", "in front of"], correct: 0, feedbacks: ["Doğru. 'next to' yanında demektir.", "Yanlış. 'between' arasında demektir.", "Yanlış. 'on the corner of' köşesinde demektir.", "Yanlış. 'in front of' önünde demektir."] },
+        { text: "The cafe is ___ the library. You need to cross the street.", words: ["The", "cafe", "is", "library", "You", "need", "to", "cross", "the", "street", "across from"], options: ["across from", "next to", "behind", "between"], correct: 0, feedbacks: ["Doğru. 'across from' karşısında demektir.", "Yanlış. 'next to' yanında demektir.", "Yanlış. 'behind' arkasında demektir.", "Yanlış. 'between' arasında demektir."] },
+        { text: "The hospital is ___ the pharmacy and the bakery.", words: ["The", "hospital", "is", "pharmacy", "and", "bakery", "between"], options: ["between", "next to", "across from", "on the corner of"], correct: 0, feedbacks: ["Doğru. 'between' arasında demektir.", "Yanlış. 'next to' yanında demektir.", "Yanlış. 'across from' karşısında demektir.", "Yanlış. 'on the corner of' köşesinde demektir."] },
+        { text: "The museum is ___ the corner of Park Street and Museum Road.", words: ["The", "museum", "is", "corner", "Park Street", "and", "Museum Road", "on the corner of"], options: ["on", "in", "at", "between"], correct: 0, feedbacks: ["Doğru. 'on the corner of' doğru ifade.", "Yanlış. 'in the corner of' kapalı alanlar için.", "Yanlış. 'at the corner of' bazen olur ama 'on' tercih edilir.", "Yanlış. 'between' iki yol arasında değil, köşesinde."] },
+        { text: "The shoe store is ___ the clothes shop. They are next to each other.", words: ["The", "shoe store", "is", "clothes shop", "They", "are", "next to", "each other", "next to"], options: ["next to", "between", "across from", "behind"], correct: 0, feedbacks: ["Doğru. 'next to' yanında demektir.", "Yanlış. 'between' arasında demektir.", "Yanlış. 'across from' karşısında demektir.", "Yanlış. 'behind' arkasında demektir."] },
+        { text: "The bakery is ___ the pharmacy. They are on the same street, but not next to each other.", words: ["The", "bakery", "is", "pharmacy", "They", "are", "on", "the", "same", "street", "but", "not", "next to", "each other", "near"], options: ["near", "between", "on the corner of", "in front of"], correct: 0, feedbacks: ["Doğru. 'near' yakınında demektir.", "Yanlış. 'between' arasında demektir.", "Yanlış. 'on the corner of' köşesinde demektir.", "Yanlış. 'in front of' önünde demektir."] },
+        { text: "The supermarket is ___ the corner of Oak Street and Pine Avenue.", words: ["The", "supermarket", "is", "corner", "Oak Street", "and", "Pine Avenue", "on the corner of"], options: ["on", "in", "at", "between"], correct: 0, feedbacks: ["Doğru. 'on the corner of' doğru ifade.", "Yanlış. 'in the corner of' kapalı alanlar için.", "Yanlış. 'at the corner of' bazen olur ama 'on' tercih edilir.", "Yanlış. 'between' iki cadde arasında değil, köşesinde."] },
+        { text: "The market is ___ the corner of First Street and Second Avenue.", words: ["The", "market", "is", "corner", "First Street", "and", "Second Avenue", "on the corner of"], options: ["on", "in", "at", "between"], correct: 0, feedbacks: ["Doğru. 'on the corner of' doğru ifade.", "Yanlış. 'in the corner of' kapalı alanlar için.", "Yanlış. 'at the corner of' bazen olur ama 'on' tercih edilir.", "Yanlış. 'between' iki cadde arasında değil, köşesinde."] },
+        { text: "My flat is ___ the 5th floor. It's ___ a supermarket and a park.", words: ["My", "flat", "is", "the", "5th floor", "It's", "a", "supermarket", "and", "park", "on", "between"], options: ["on / between", "in / next to", "at / across from", "on / behind"], correct: 0, feedbacks: ["Doğru. 'on the 5th floor' ve 'between a supermarket and a park'.", "Yanlış. 'in the 5th floor' yanlış.", "Yanlış. 'at the 5th floor' yanlış.", "Yanlış. 'on / behind' arkasında değil, arasında."] },
+        { text: "My apartment is ___ the third floor. It's ___ a bank and a cafe.", words: ["My", "apartment", "is", "the", "third floor", "It's", "a", "bank", "and", "cafe", "on", "between"], options: ["on / between", "in / next to", "at / across from", "on / behind"], correct: 0, feedbacks: ["Doğru. 'on the third floor' ve 'between a bank and a cafe'.", "Yanlış. 'in the third floor' yanlış.", "Yanlış. 'at the third floor' yanlış.", "Yanlış. 'on / behind' arkasında değil, arasında."] },
+        { text: "The flower shop is ___ the toy store and the bakery.", words: ["The", "flower shop", "is", "toy store", "and", "bakery", "between"], options: ["between", "next to", "across from", "on the corner of"], correct: 0, feedbacks: ["Doğru. 'between' arasında demektir.", "Yanlış. 'next to' yanında demektir.", "Yanlış. 'across from' karşısında demektir.", "Yanlış. 'on the corner of' köşesinde demektir."] },
+        { text: "The gym is ___ the hospital. You need to cross the street.", words: ["The", "gym", "is", "hospital", "You", "need", "to", "cross", "the", "street", "across from"], options: ["across from", "next to", "behind", "between"], correct: 0, feedbacks: ["Doğru. 'across from' karşısında demektir.", "Yanlış. 'next to' yanında demektir.", "Yanlış. 'behind' arkasında demektir.", "Yanlış. 'between' arasında demektir."] },
+        { text: "I usually wake up ___ 7 o'clock ___ the morning.", words: ["I", "usually", "wake up", "7 o'clock", "the morning", "at", "in"], options: ["at / in", "on / in", "in / at", "at / on"], correct: 0, feedbacks: ["Doğru. 'at 7 o'clock' ve 'in the morning'.", "Yanlış. 'on 7 o'clock' yanlış.", "Yanlış. 'in 7 o'clock' yanlış.", "Yanlış. 'on the morning' yanlış."] },
+        { text: "My birthday is ___ Monday. We have a party ___ night.", words: ["My", "birthday", "is", "Monday", "We", "have", "a", "party", "night", "on", "at"], options: ["on / at", "in / at", "at / in", "on / in"], correct: 0, feedbacks: ["Doğru. 'on Monday' ve 'at night'.", "Yanlış. 'in Monday' yanlış.", "Yanlış. 'at Monday' yanlış.", "Yanlış. 'in night' yanlış."] },
+        { text: "I have English class ___ 9:30 ___ Tuesdays.", words: ["I", "have", "English class", "9:30", "Tuesdays", "at", "on"], options: ["at / on", "on / at", "in / on", "at / in"], correct: 0, feedbacks: ["Doğru. 'at 9:30' ve 'on Tuesdays'.", "Yanlış. 'on 9:30' yanlış.", "Yanlış. 'in 9:30' yanlış.", "Yanlış. 'in Tuesdays' yanlış."] },
+        { text: "We don't go to school ___ the weekend.", words: ["We", "don't", "go", "to", "school", "the weekend", "on"], options: ["on", "in", "at", "for"], correct: 0, feedbacks: ["Doğru. 'on the weekend' doğru.", "Yanlış. 'in the weekend' yanlış.", "Yanlış. 'at the weekend' İngiliz İngilizcesi'nde olabilir.", "Yanlış. 'for the weekend' farklı anlam."] },
+        { text: "The train leaves ___ noon. Let's meet ___ the station.", words: ["The", "train", "leaves", "noon", "Let's", "meet", "station", "at"], options: ["at / at", "in / at", "on / in", "at / on"], correct: 0, feedbacks: ["Doğru. 'at noon' ve 'at the station'.", "Yanlış. 'in noon' yanlış.", "Yanlış. 'on noon' yanlış.", "Yanlış. 'on the station' yanlış."] },
+        { text: "I was born ___ 1990. My birthday is ___ January 5th.", words: ["I", "was born", "1990", "My", "birthday", "is", "January", "in", "on"], options: ["in / on", "on / in", "at / on", "in / at"], correct: 0, feedbacks: ["Doğru. 'in 1990' ve 'on January 5th'.", "Yanlış. 'on 1990' yanlış.", "Yanlış. 'at 1990' yanlış.", "Yanlış. 'at January 5th' yanlış."] },
+        { text: "The movie starts ___ 8 PM. We should be there ___ 7:45.", words: ["The", "movie", "starts", "8 PM", "We", "should", "be", "there", "7:45", "at"], options: ["at / at", "on / at", "in / at", "at / in"], correct: 0, feedbacks: ["Doğru. İki yerde de 'at' kullanılır.", "Yanlış. 'on 8 PM' yanlış.", "Yanlış. 'in 8 PM' yanlış.", "Yanlış. 'in 7:45' yanlış."] },
+        { text: "We have a meeting ___ Monday morning ___ 10 o'clock.", words: ["We", "have", "a", "meeting", "Monday morning", "10 o'clock", "on", "at"], options: ["on / at", "in / at", "at / on", "on / in"], correct: 0, feedbacks: ["Doğru. 'on Monday morning' ve 'at 10 o'clock'.", "Yanlış. 'in Monday morning' yanlış.", "Yanlış. 'at Monday morning' yanlış.", "Yanlış. 'in 10 o'clock' yanlış."] },
+        { text: "She was born ___ July. Her birthday is ___ July 12th.", words: ["She", "was born", "July", "Her", "birthday", "is", "in", "on"], options: ["in / on", "on / in", "at / on", "in / at"], correct: 0, feedbacks: ["Doğru. 'in July' ve 'on July 12th'.", "Yanlış. 'on July' yanlış.", "Yanlış. 'at July' yanlış.", "Yanlış. 'at July 12th' yanlış."] },
+        { text: "I usually go to the gym ___ the evening, but ___ Sundays I go in the morning.", words: ["I", "usually", "go", "to", "the", "gym", "the evening", "but", "Sundays", "in", "on"], options: ["in / on", "on / in", "at / on", "in / at"], correct: 0, feedbacks: ["Doğru. 'in the evening' ve 'on Sundays'.", "Yanlış. 'on the evening' yanlış.", "Yanlış. 'at the evening' yanlış.", "Yanlış. 'at Sundays' yanlış."] },
+        { text: "I have a dentist appointment ___ 3 PM ___ Friday.", words: ["I", "have", "a", "dentist appointment", "3 PM", "Friday", "at", "on"], options: ["at / on", "on / at", "in / on", "at / in"], correct: 0, feedbacks: ["Doğru. 'at 3 PM' ve 'on Friday'.", "Yanlış. 'on 3 PM' yanlış.", "Yanlış. 'in 3 PM' yanlış.", "Yanlış. 'in Friday' yanlış."] },
+        { text: "We have a party ___ midnight. Let's meet ___ the restaurant.", words: ["We", "have", "a", "party", "midnight", "Let's", "meet", "restaurant", "at"], options: ["at / at", "in / at", "on / in", "at / on"], correct: 0, feedbacks: ["Doğru. 'at midnight' ve 'at the restaurant'.", "Yanlış. 'in midnight' yanlış.", "Yanlış. 'on midnight' yanlış.", "Yanlış. 'on the restaurant' yanlış."] },
+        { text: "I was born ___ January. My sister was born ___ 1995.", words: ["I", "was born", "January", "My", "sister", "was born", "1995", "in"], options: ["in / in", "on / in", "at / in", "in / on"], correct: 0, feedbacks: ["Doğru. 'in January' ve 'in 1995'.", "Yanlış. 'on January' yanlış.", "Yanlış. 'at January' yanlış.", "Yanlış. 'on 1995' yanlış."] },
+        { text: "The party is ___ Saturday evening.", words: ["The", "party", "is", "Saturday", "evening", "on"], options: ["on", "in", "at", "for"], correct: 0, feedbacks: ["Doğru. 'on Saturday evening' doğru.", "Yanlış. 'in Saturday evening' yanlış.", "Yanlış. 'at Saturday evening' yanlış.", "Yanlış. 'for Saturday evening' farklı anlam."] },
+        { text: "My brother's birthday is ___ March.", words: ["My", "brother's", "birthday", "is", "March", "in"], options: ["in", "on", "at", "for"], correct: 0, feedbacks: ["Doğru. 'in March' aylar için 'in' kullanılır.", "Yanlış. 'on March' yanlış.", "Yanlış. 'at March' yanlış.", "Yanlış. 'for March' farklı anlam."] },
+        { text: "The meeting is ___ Wednesday ___ 2 PM.", words: ["The", "meeting", "is", "Wednesday", "2 PM", "on", "at"], options: ["on / at", "in / at", "at / on", "on / in"], correct: 0, feedbacks: ["Doğru. 'on Wednesday' ve 'at 2 PM'.", "Yanlış. 'in Wednesday' yanlış.", "Yanlış. 'at Wednesday' yanlış.", "Yanlış. 'in 2 PM' yanlış."] },
+        { text: "We celebrate New Year ___ January 1st.", words: ["We", "celebrate", "New Year", "January", "on"], options: ["on", "in", "at", "for"], correct: 0, feedbacks: ["Doğru. 'on January 1st' tarihler için 'on' kullanılır.", "Yanlış. 'in January 1st' yanlış.", "Yanlış. 'at January 1st' yanlış.", "Yanlış. 'for January 1st' farklı anlam."] },
+        { text: "My father works ___ night. He sleeps ___ the morning.", words: ["My", "father", "works", "night", "He", "sleeps", "the morning", "at", "in"], options: ["at / in", "in / at", "on / in", "at / on"], correct: 0, feedbacks: ["Doğru. 'at night' ve 'in the morning'.", "Yanlış. 'in night' yanlış.", "Yanlış. 'on night' yanlış.", "Yanlış. 'on the morning' yanlış."] },
+        { text: "I do my homework ___ the afternoon.", words: ["I", "do", "my", "homework", "the afternoon", "in"], options: ["in", "on", "at", "for"], correct: 0, feedbacks: ["Doğru. 'in the afternoon' doğru.", "Yanlış. 'on the afternoon' yanlış.", "Yanlış. 'at the afternoon' yanlış.", "Yanlış. 'for the afternoon' farklı anlam."] },
+        { text: "We watch movies ___ Friday night.", words: ["We", "watch", "movies", "Friday", "night", "on"], options: ["on", "in", "at", "for"], correct: 0, feedbacks: ["Doğru. 'on Friday night' doğru.", "Yanlış. 'in Friday night' yanlış.", "Yanlış. 'at Friday night' yanlış.", "Yanlış. 'for Friday night' farklı anlam."] },
+        { text: "The store opens ___ 6 AM and closes ___ 9 PM.", words: ["The", "store", "opens", "6 AM", "and", "closes", "9 PM", "at"], options: ["at / at", "in / at", "on / at", "at / in"], correct: 0, feedbacks: ["Doğru. İki saat için de 'at' kullanılır.", "Yanlış. 'in 6 AM' yanlış.", "Yanlış. 'on 6 AM' yanlış.", "Yanlış. 'in 9 PM' yanlış."] },
+        { text: "My birthday is ___ December 25th.", words: ["My", "birthday", "is", "December", "on"], options: ["on", "in", "at", "for"], correct: 0, feedbacks: ["Doğru. 'on December 25th' tarihler için 'on'.", "Yanlış. 'in December 25th' yanlış.", "Yanlış. 'at December 25th' yanlış.", "Yanlış. 'for December 25th' farklı anlam."] },
+        { text: "I get up early ___ the morning ___ weekdays.", words: ["I", "get up", "early", "the morning", "weekdays", "in", "on"], options: ["in / on", "on / in", "at / on", "in / at"], correct: 0, feedbacks: ["Doğru. 'in the morning' ve 'on weekdays'.", "Yanlış. 'on the morning' yanlış.", "Yanlış. 'at the morning' yanlış.", "Yanlış. 'at weekdays' yanlış."] }
+    ];
+
+    // ------------------------------------------------------------
+    // RENDER - DOĞRUDAN İŞARETLEME YAKLAŞIMI (bozuk ifade bırakmaz)
+    // ------------------------------------------------------------
+    const container = document.getElementById('testContainer');
+    let activeWordBtn = null;
+    let activeTranslation = null;
+
+    // Kelime listesindeki her kelimeyi bulup düğmeye çeviren güvenli fonksiyon
+    function renderQuestionText(text, words) {
+        // Kelimeleri uzunluk sırasına göre sırala (uzun önce)
+        const sorted = [...words].sort((a, b) => b.length - a.length);
+        // Her kelimeyi özel bir işaretle (çakışmayı önlemek için sıra numarası ekle)
+        let markers = [];
+        let markedText = text;
+
+        sorted.forEach((word, idx) => {
+            const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
+            const markerId = `@@${idx}@@`;
+            // Eğer daha önce işaretlenmişse atla
+            markedText = markedText.replace(regex, (match) => {
+                markers.push({ id: markerId, word: match });
+                return markerId;
+            });
+        });
+
+        // Şimdi markerları düğmelere çevir
+        let html = markedText;
+        markers.forEach(m => {
+            const lookupKey = m.word.toLowerCase();
+            // Marker'ı düğme HTML'i ile değiştir
+            html = html.replace(m.id, `<button class="word-btn" data-word="${lookupKey}">${m.word}</button>`);
+        });
+
+        // Eğer hiç marker kalmadıysa veya bir sorun olduysa orijinal metni kullan
+        if (html.includes('@@')) {
+            // Güvenlik: kalan markerları temizle
+            html = text;
+            sorted.forEach(word => {
+                const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
+                html = html.replace(regex, (match) => {
+                    const lookupKey = match.toLowerCase();
+                    return `<button class="word-btn" data-word="${lookupKey}">${match}</button>`;
+                });
+            });
+        }
+
+        return html;
+    }
+
+    questions.forEach((q, idx) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+
+        const header = document.createElement('div');
+        header.className = 'question-header';
+        const numSpan = document.createElement('span');
+        numSpan.className = 'q-number';
+        numSpan.textContent = (idx + 1);
+        header.appendChild(numSpan);
+
+        const textDiv = document.createElement('div');
+        textDiv.className = 'q-text';
+        textDiv.innerHTML = renderQuestionText(q.text, q.words);
+
+        header.appendChild(textDiv);
+        card.appendChild(header);
+
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+
+        q.options.forEach((opt, optIdx) => {
+            const optBtn = document.createElement('button');
+            optBtn.className = 'option-btn';
+            const marker = String.fromCharCode(65 + optIdx);
+            optBtn.innerHTML = `<span class="opt-marker">${marker})</span> ${opt}`;
+            const feedbackId = `fb-${idx}-${optIdx}`;
+            optBtn.dataset.feedbackId = feedbackId;
+
+            optBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+
+                speakOption(opt);
+
+                const parent = this.parentElement;
+                parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active-opt'));
+                this.classList.add('active-opt');
+
+                const existingFeedback = document.getElementById(feedbackId);
+                if (existingFeedback && existingFeedback.classList.contains('show')) {
+                    existingFeedback.classList.remove('show');
+                    return;
+                }
+                let feedbackEl = existingFeedback;
+                if (!feedbackEl) {
+                    feedbackEl = document.createElement('div');
+                    feedbackEl.id = feedbackId;
+                    feedbackEl.className = 'option-feedback';
+                    const isCorrect = (optIdx === q.correct);
+                    const feedbackText = q.feedbacks[optIdx] || (isCorrect ? 'Doğru cevap.' : 'Yanlış cevap.');
+
+                    const optKey = opt.toLowerCase().trim();
+                    const summary = optionGrammarSummary[optKey] || '';
+
+                    let html = feedbackText;
+                    if (summary) {
+                        html += `<span class="grammar-summary">${summary}</span>`;
+                    }
+                    feedbackEl.innerHTML = html;
+
+                    if (isCorrect) {
+                        feedbackEl.classList.add('correct-fb');
+                    } else {
+                        feedbackEl.classList.add('wrong-fb');
+                    }
+                    this.insertAdjacentElement('afterend', feedbackEl);
+                }
+                feedbackEl.classList.add('show');
+            });
+
+            optionsDiv.appendChild(optBtn);
+        });
+
+        card.appendChild(optionsDiv);
+        container.appendChild(card);
+    });
+
+    // ------------------------------------------------------------
+    // KELİME BUTONLARI
+    // ------------------------------------------------------------
+    function closeActiveWordPopup() {
+        if (activeTranslation && activeTranslation.parentNode) {
+            activeTranslation.remove();
+        }
+        if (activeWordBtn) {
+            activeWordBtn.classList.remove('active');
+        }
+        activeTranslation = null;
+        activeWordBtn = null;
+    }
+
+    document.querySelectorAll('.word-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+
+            const wordKey = this.dataset.word;
+
+            if (activeWordBtn === this) {
+                closeActiveWordPopup();
+                return;
+            }
+
+            closeActiveWordPopup();
+
+            const entry = dictionary[wordKey] || dictionary[wordKey.toLowerCase()];
+            let trText, noteText;
+
+            if (entry && typeof entry === 'object') {
+                trText = entry.tr;
+                noteText = entry.note;
+            } else if (entry && typeof entry === 'string') {
+                trText = entry;
+                noteText = '';
+            } else {
+                trText = wordKey;
+                noteText = '';
+            }
+
+            const span = document.createElement('span');
+            span.className = 'word-translation';
+            let html = trText;
+            if (noteText) {
+                html += `<span class="grammar-note">${noteText}</span>`;
+            }
+            span.innerHTML = html;
+            this.insertAdjacentElement('afterend', span);
+            this.classList.add('active');
+
+            activeWordBtn = this;
+            activeTranslation = span;
+
+            // İngilizce kelimeyi, sonra Türkçe çeviriyi ve açıklamayı seslendir
+            speakWordFull(wordKey, trText, noteText);
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.word-btn') && !e.target.closest('.word-translation')) {
+            closeActiveWordPopup();
+        }
+    });
+
+    // ------------------------------------------------------------
+    // SESLENDİRME
+    // ------------------------------------------------------------
+
+    // Kelimeyi İngilizce + Türkçe çeviri + açıklama sırayla seslendir
+    function speakWordFull(englishWord, turkishText, noteText) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+
+        // 1. İngilizce kelime
+        const utterEn = new SpeechSynthesisUtterance(englishWord);
+        utterEn.lang = 'en-US';
+        utterEn.rate = 0.85;
+        utterEn.pitch = 1;
+
+        // 2. Türkçe çeviri
+        const trClean = turkishText.replace(/\s*\(.*?\)\s*/g, '').trim();
+        const utterTr = new SpeechSynthesisUtterance(trClean);
+        utterTr.lang = 'tr-TR';
+        utterTr.rate = 0.9;
+        utterTr.pitch = 1;
+
+        // 3. Türkçe açıklama
+        const noteClean = (noteText || '').replace(/\s*\(.*?\)\s*/g, '').trim();
+        const utterNote = new SpeechSynthesisUtterance(noteClean);
+        utterNote.lang = 'tr-TR';
+        utterNote.rate = 0.9;
+        utterNote.pitch = 1;
+
+        // Sıralı çalma: İngilizce → Türkçe çeviri → Türkçe açıklama
+        utterEn.onend = function() {
+            window.speechSynthesis.speak(utterTr);
+        };
+        utterTr.onend = function() {
+            if (noteClean.length > 0) {
+                window.speechSynthesis.speak(utterNote);
+            }
+        };
+
+        window.speechSynthesis.speak(utterEn);
+    }
+
+    // Şıkkı İngilizce seslendir
+    function speakOption(optionText) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+
+        const utterEn = new SpeechSynthesisUtterance(optionText);
+        utterEn.lang = 'en-US';
+        utterEn.rate = 0.85;
+        utterEn.pitch = 1;
+
+        // Şıkkın sözlükten Türkçesini bul
+        const optKey = optionText.toLowerCase().trim();
+        const entry = dictionary[optKey];
+        let trText = '';
+
+        if (entry && typeof entry === 'object') {
+            trText = entry.tr;
+        } else if (entry && typeof entry === 'string') {
+            trText = entry;
+        }
+
+        if (trText) {
+            const trClean = trText.replace(/\s*\(.*?\)\s*/g, '').trim();
+            const utterTr = new SpeechSynthesisUtterance(trClean);
+            utterTr.lang = 'tr-TR';
+            utterTr.rate = 0.9;
+            utterTr.pitch = 1;
+
+            utterEn.onend = function() {
+                window.speechSynthesis.speak(utterTr);
+            };
+        }
+
+        window.speechSynthesis.speak(utterEn);
+    }
+
+    console.log('50 soruluk test hazır! Tüm kelimeler İngilizce ve Türkçe seslendiriliyor.');
+</script>
+</body>
+</html>
